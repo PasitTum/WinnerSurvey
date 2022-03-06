@@ -1,0 +1,240 @@
+﻿@model WinnerSurvey.Models.L1.mWGE
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+</script>
+
+<body>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">WinnerSurvey1</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive no-padding">
+                    <br />
+
+                    @using (Html.BeginForm("WinnerSurvey1"
+                                     , "WGE"
+                                     , FormMethod.Get
+                                     , new { id = "oForm" }))
+                    {
+                        <div style="display:none">
+                            <input name="year" value="@Model.Year" />
+                        </div>
+
+                        <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>ID</th>
+                                    <th>รหัสลูกค้า</th>
+                                    <th>ชื่อลูกค้า</th>
+                                    <th>Salecode</th>
+                                    <th>QR Code</th>
+                                    <th>วันที่เอกสาร</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (Model != null && Model.mwge2.ListSurvey1 != null && Model.mwge2.ListSurvey1.Count > 0)
+                                {
+                                    foreach (var oItem in Model.mwge2.ListSurvey1)
+                                    {
+                                        <tr>
+                                            <td>@oItem.ID</td>
+                                            <td>@oItem.Cardcode</td>
+                                            <td>@oItem.Cardname</td>
+                                            <td>@oItem.SaleCode</td>
+                                            <td>@oItem.QRCode - @oItem.Code</td>
+                                            <td data-order="@oItem.Date.Value.ToString("yyyyMMdd")">@oItem.Date.Value.ToString("dd/MM/yyyy")</td>
+                                            <td style="text-align:center">
+                                                <button type="submit" name="numberid" value="@oItem.EncryptPassword" class="btn btn-info">Submit</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">WinnerSurvey2</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive no-padding">
+                    <br />
+
+                    @using (Html.BeginForm("WinnerSurvey2"
+                                     , "WGE"
+                                     , FormMethod.Post
+                                     , new { id = "oForm" }))
+                    {
+                        <div style="display:none">
+                            <input name="year" value="@Model.Year" />
+                        </div>
+
+                        <table id="odgvData2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th>ID</th>
+                                    <th>ชื่อลูกค้า</th>
+                                    <th>QR Code</th>
+                                    <th>วันที่เอกสาร</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var oItem in Model.mwge2.ListSurvey2)
+                                {
+                                    <tr>
+                                        <td>@oItem.ID</td>
+                                        <td>@oItem.Name</td>
+                                        <td>@oItem.QRCode - @oItem.Code</td>
+                                        <td data-order="@oItem.Date.Value.ToString("yyyyMMdd")">@oItem.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td style="text-align:center" width="25%">
+                                            <button type="submit" name="numberid" value="@oItem.EncryptPassword" class="btn btn-info">Submit</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section scripts{
+
+    <link rel="stylesheet" href="~/Content/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <script type="text/javascript" src="~/Content/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    @*Gridview*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#odgvData').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                language: {
+                    "zeroRecords": "ไม่มีข้อมูล"
+                },
+                'order': [[0, "desc"]]
+            });
+
+            $('#Paginator').on('click', 'a', function (even) {
+
+                var tPage = this.search;
+
+                if (tPage == "")
+                    return false;
+
+                tPage = tPage.replace("?", "");
+                tPage = tPage.split("&")[0].replace("page=", "");
+                $("#Page").val(tPage);
+                $("#obtnSearch").click();
+
+                //var radioValue = $("input[name='XVScanType']:checked").val();
+                //pmdoData = {
+                //    XVScanType: radioValue,
+                //    XVSearch: $("#XVSearch").val(),
+                //}
+
+                //$.ajax({
+                //    url: this.href,
+                //    type: 'POST',
+                //    data: pmdoData,
+                //    cache: false,
+                //    async: true,
+                //    error: function (jqXHR, error, errorThrown) {
+                //        //display error
+                //    },
+                //    success: function (data, textStatus, jqXHR) {
+                //        $("body").html(data);
+                //    }
+                //});
+                return false;
+            });
+        });
+    </script>
+
+    @*Gridview*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#odgvData2').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                language: {
+                    "zeroRecords": "ไม่มีข้อมูล"
+                },
+                'order': [[0, "desc"]]
+            });
+
+            $('#Paginator').on('click', 'a', function (even) {
+
+                var tPage = this.search;
+
+                if (tPage == "")
+                    return false;
+
+                tPage = tPage.replace("?", "");
+                tPage = tPage.split("&")[0].replace("page=", "");
+                $("#Page").val(tPage);
+                $("#obtnSearch").click();
+
+                //var radioValue = $("input[name='XVScanType']:checked").val();
+                //pmdoData = {
+                //    XVScanType: radioValue,
+                //    XVSearch: $("#XVSearch").val(),
+                //}
+
+                //$.ajax({
+                //    url: this.href,
+                //    type: 'POST',
+                //    data: pmdoData,
+                //    cache: false,
+                //    async: true,
+                //    error: function (jqXHR, error, errorThrown) {
+                //        //display error
+                //    },
+                //    success: function (data, textStatus, jqXHR) {
+                //        $("body").html(data);
+                //    }
+                //});
+                return false;
+            });
+        });
+    </script>
+}
+

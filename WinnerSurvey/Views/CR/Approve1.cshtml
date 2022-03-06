@@ -1,0 +1,207 @@
+﻿@model WinnerSurvey.Models.L1.mWGE
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+    function toggle(checktoggle) {
+
+        var checkboxes = new Array();
+        checkboxes = document.getElementsByName('checkbox1');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].type == 'checkbox') {
+                checkboxes[i].checked = checktoggle.checked;
+            }
+        }
+    }
+
+    $(function selectall() {
+
+        $(document).ready(function () {
+            var oTable = $('#odgvData').dataTable();
+
+            var allPages = oTable.fnGetNodes();
+
+            $('form').on('click', '#select-all', function () {
+                if ($(this).hasClass('allChecked')) {
+                    $('input[type="checkbox"]', allPages).prop('checked', true);
+                } else {
+                    $('input[type="checkbox"]', allPages).prop('checked', false);
+                }
+                $(this).toggleClass('allChecked');
+            })
+        });
+
+    });
+
+</script>
+<style lang="scss" scoped>
+    .text-center {
+        text-align: center;
+    }
+
+    .text-left {
+        text-align: left !important;
+    }
+</style>
+<body>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">รายงานสรุปผลการประเมินความพึงพอใจ(WinnerSurvey1) - @Model.Year</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive no-padding">
+                    <div class="col-md-12 box-detail">
+                        @using (Html.BeginForm("getApprove1"
+                                         , "CR"
+                                         , FormMethod.Post
+                                         , new { id = "oForm" }))
+                        {
+                            <div style="display:none">
+                                <input name="Year" value="@Model.Year" />
+                            </div>
+
+                            <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center">ลำดับ</th>
+                                        <th class="text-center">รายการ</th>
+                                        <th class="text-center">วันที่สรุป</th>
+                                        <th class="text-center">แผนก</th>
+                                        <th class="text-center">ผู้สรุป</th>
+                                        <th class="text-center">สถานะ</th>
+                                        <th class="text-center">ตรวจสอบรายการ</th>
+                                        <th class="text-center">พิมพ์เอกสาร</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                    }
+                                    @if (Model != null && Model.List_Survey_Report.Count > 0)
+                                    {
+
+                                        foreach (var oItem in Model.List_Survey_Report)
+                                        {
+                                    <tr class="text-center">
+                                        <td>@i</td>
+                                        <td class="text-left">รายงานสรุปผลการประเมินความพึงพอใจของกลุ่มลูกค้าผู้ผลิตหรือผู้จัดจำหน่ายประจำปี-@oItem.Year_Survey1</td>
+                                        <td>@oItem.Date_Accept</td>
+                                        @if (oItem.Dept == "c1")
+                                        {
+                                            <td>ID</td>
+                                        }
+                                        else if (oItem.Dept == "c3")
+                                        {
+                                            <td>FS</td>
+                                        }
+                                        else if (oItem.Dept == "c4")
+                                        {
+                                            <td>MT</td>
+                                        }
+                                        else if (oItem.Dept == "c")
+                                        {
+                                            <td>MK</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        <td>@oItem.User_Accept</td>
+                                        @if (oItem.Head_Approve != null)
+                                        {
+                                            <td>อนุมัติ</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="color:red">รอการอนุมัติ</td>
+                                        }
+                                        <td><button class="btn btn-success" name="ID_Report" value="@oItem.ID_Report">ตรวจสอบรายการ</button></td>
+                                        <td><button class="btn btn-info text-center" name="print" id="print" value="@oItem.ID_Report">Print</button></td>
+                                    </tr>
+                                            i++;
+                                        }
+                                    }
+
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section scripts{
+
+    <link rel="stylesheet" href="~/Content/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <script type="text/javascript" src="~/Content/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    @*Gridview*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#odgvData').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                language: {
+                    "zeroRecords": "ไม่มีข้อมูล"
+                },
+                stateSave: true
+
+            });
+
+            $('#Paginator').on('click', 'a', function (even) {
+
+                var tPage = this.search;
+
+                if (tPage == "")
+                    return false;
+
+                tPage = tPage.replace("?", "");
+                tPage = tPage.split("&")[0].replace("page=", "");
+                $("#Page").val(tPage);
+                $("#obtnSearch").click();
+
+                //var radioValue = $("input[name='XVScanType']:checked").val();
+                //pmdoData = {
+                //    XVScanType: radioValue,
+                //    XVSearch: $("#XVSearch").val(),
+                //}
+
+                //$.ajax({
+                //    url: this.href,
+                //    type: 'POST',
+                //    data: pmdoData,
+                //    cache: false,
+                //    async: true,
+                //    error: function (jqXHR, error, errorThrown) {
+                //        //display error
+                //    },
+                //    success: function (data, textStatus, jqXHR) {
+                //        $("body").html(data);
+                //    }
+                //});
+                return false;
+            });
+        });
+    </script>
+}
+

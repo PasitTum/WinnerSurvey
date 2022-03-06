@@ -1,0 +1,510 @@
+﻿@model WinnerSurvey.Models.L1.mWGE
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+<style lang="scss" scoped>
+    .text-center {
+        align-self: center;
+        border-collapse: collapse;
+        padding: 0 !important;
+        justify-content: center;
+        position: relative;
+        
+    }
+    .text-left{
+        text-align:left !important;
+    }
+    td{
+        text-align:center;
+    }
+    .box-title{
+        font-size:25px !important;
+        margin-left:10px !important;
+    }
+    .AVG{
+        background-color:brown;
+        color:aliceblue;
+    }
+    .OVA{
+        background-color:blanchedalmond;
+    }
+    .total{
+        background-color:aquamarine;
+    }
+    .person{
+        text-align:center;
+    }
+    .manage{
+        text-align:center;
+    }
+    .sign1{
+        padding:18px;
+        font:bold;
+        font-family:'TH SarabunPSK';
+    }
+    .total2 {
+        background-color:lightskyblue;
+    }
+    .bm {
+        border: 0px #EB3437 solid;
+    }
+</style>
+<body>
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div style="padding:10px;">
+                        <h2 class="box-title">สรุปผลการประเมินความพึงพอใจของกลุ่มลูกค้าผู้ผลิตหรือผู้จัดจำหน่ายปี 2021</h2>
+                    </div>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body table-responsive no-padding">
+                    <div class="col-md-12 box-detail">
+                        @using (Html.BeginForm("getApprove1"
+                                         , "CR"
+                                         , FormMethod.Post
+                                         , new { id = "oForm" }))
+                        {
+
+
+                            <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="text-center" rowspan="2">No</th>
+                                        <th class="text-center" rowspan="2">ชื่อลูกค้า</th>
+                                        <th class="text-center" rowspan="1" colspan="8">ความคิดเห็นต่อผลิตภัณฑ์</th>
+                                        <th class="text-center" rowspan="1" colspan="5">การจัดส่ง</th>
+                                        <th class="text-center" rowspan="1" colspan="5">การบริการ</th>
+                                        <th class="text-center" rowspan="1" colspan="4">การติดต่อสื่อสาร</th>
+                                        <th class="text-center OVA" rowspan="2">
+                                            <p>OVERALL(E)<br />( A+B+D+C )</p>
+                                        </th>
+                                        <th class="text-center total" rowspan="2">
+                                            <p>ผลประเมิน<br />(E/5) x 100</p>
+                                        </th>
+                                    </tr>
+                                    <tr role="row">
+                                        <td>1.1</td>
+                                        <td>1.2</td>
+                                        <td>1.3</td>
+                                        <td>1.4</td>
+                                        <td>1.5</td>
+                                        <td>1.6</td>
+                                        <td>1.7</td>
+                                        <td class="AVG">Avg(A)</td>
+                                        <td>2.1</td>
+                                        <td>2.2</td>
+                                        <td>2.3</td>
+                                        <td>2.4</td>
+                                        <td class="AVG">Avg(B)</td>
+                                        <td>3.1</td>
+                                        <td>3.2</td>
+                                        <td>3.3</td>
+                                        <td>3.4</td>
+                                        <td class="AVG">Avg(C)</td>
+                                        <td>4.1</td>
+                                        <td>4.2</td>
+                                        <td>4.3</td>
+                                        <td class="AVG">Avg(D)</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int i = 0;
+                                        int index = 1;
+                                        double Avg1_1 = 0;
+                                        double Avg1_2 = 0;
+                                        double Avg1_3 = 0;
+                                        double Avg1_4 = 0;
+                                        double Avg1_5 = 0;
+                                        double Avg1_6 = 0;
+                                        double Avg1_7 = 0;
+                                        double AvgA = 0;
+                                        double Avg2_1 = 0;
+                                        double Avg2_2 = 0;
+                                        double Avg2_3 = 0;
+                                        double Avg2_4 = 0;
+                                        double AvgB = 0;
+                                        double Avg3_1 = 0;
+                                        double Avg3_2 = 0;
+                                        double Avg3_3 = 0;
+                                        double Avg3_4 = 0;
+                                        double AvgC = 0;
+                                        double Avg4_1 = 0;
+                                        double Avg4_2 = 0;
+                                        double Avg4_3 = 0;
+                                        double AvgD = 0;
+                                        double AvgE = 0;
+                                        double AvgE5 = 0;
+                                    }
+                                    @foreach (var oitem in Model.mwge3)
+                                    {
+                                        double Avg_A = ((Convert.ToDouble(oitem.product1) +
+                                                         Convert.ToDouble(oitem.product2) +
+                                                         Convert.ToDouble(oitem.product3) +
+                                                         Convert.ToDouble(oitem.product4) +
+                                                         Convert.ToDouble(oitem.product5) +
+                                                         Convert.ToDouble(oitem.product6) +
+                                                         Convert.ToDouble(oitem.product7)) / 7);
+
+                                        double Avg_B = ((Convert.ToDouble(oitem.send1) +
+                                                         Convert.ToDouble(oitem.send2) +
+                                                         Convert.ToDouble(oitem.send3) +
+                                                         Convert.ToDouble(oitem.send4)) / 4);
+
+                                        double Avg_C = ((Convert.ToDouble(oitem.service1) +
+                                                         Convert.ToDouble(oitem.service2) +
+                                                         Convert.ToDouble(oitem.service3) +
+                                                         Convert.ToDouble(oitem.service4)) / 4);
+
+                                        double Avg_D = ((Convert.ToDouble(oitem.contact1) +
+                                                         Convert.ToDouble(oitem.contact2) +
+                                                         Convert.ToDouble(oitem.contact3)) / 3);
+                                        double overall = (Avg_A + Avg_B + Avg_C + Avg_D) / 4;
+                                        double Total = (overall / 5) * 100;
+                                        <tr>
+
+                                            <td>@index</td>
+
+                                            <td>@oitem.Name</td>
+
+                                            <td>@oitem.product1</td>
+
+                                            <td>@oitem.product2</td>
+
+                                            <td>@oitem.product3</td>
+
+                                            <td>@oitem.product4</td>
+
+                                            <td>@oitem.product5</td>
+
+                                            <td>@oitem.product6</td>
+
+                                            <td>@oitem.product7</td>
+
+                                            <td class="AVG">@String.Format("{0:0.00}", Avg_A)</td>
+
+                                            <td>@oitem.send1</td>
+
+                                            <td>@oitem.send2</td>
+
+                                            <td>@oitem.send3</td>
+
+                                            <td>@oitem.send4</td>
+
+                                            <td class="AVG">@String.Format("{0:0.00}", Avg_B)</td>
+
+                                            <td>@oitem.service1</td>
+
+                                            <td>@oitem.service2</td>
+
+                                            <td>@oitem.service3</td>
+
+                                            <td>@oitem.service4</td>
+
+                                            <td class="AVG">@String.Format("{0:0.00}", Avg_C)</td>
+
+                                            <td>@oitem.contact1</td>
+
+                                            <td>@oitem.contact2</td>
+
+                                            <td>@oitem.contact3</td>
+
+                                            <td class="AVG">@String.Format("{0:0.00}", Avg_D)</td>
+
+                                            <td class="OVA">@String.Format("{0:0.00}", overall)</td>
+
+                                            <td class="total">@String.Format("{0:0.00}", Total)</td>
+
+                                        </tr>
+                                        i++;
+                                        index++;
+                                        Avg1_1 += Convert.ToDouble(oitem.product1);
+                                        Avg1_2 += Convert.ToDouble(oitem.product2);
+                                        Avg1_3 += Convert.ToDouble(oitem.product3);
+                                        Avg1_4 += Convert.ToDouble(oitem.product4);
+                                        Avg1_5 += Convert.ToDouble(oitem.product5);
+                                        Avg1_6 += Convert.ToDouble(oitem.product6);
+                                        Avg1_7 += Convert.ToDouble(oitem.product7);
+                                        AvgA += Convert.ToDouble(Avg_A);
+                                        Avg2_1 += Convert.ToDouble(oitem.send1);
+                                        Avg2_2 += Convert.ToDouble(oitem.send2);
+                                        Avg2_3 += Convert.ToDouble(oitem.send3);
+                                        Avg2_4 += Convert.ToDouble(oitem.send4);
+                                        AvgB += Convert.ToDouble(Avg_B);
+                                        Avg3_1 += Convert.ToDouble(oitem.service1);
+                                        Avg3_2 += Convert.ToDouble(oitem.service2);
+                                        Avg3_3 += Convert.ToDouble(oitem.service3);
+                                        Avg3_4 += Convert.ToDouble(oitem.service4);
+                                        AvgC += Convert.ToDouble(Avg_C);
+                                        Avg4_1 += Convert.ToDouble(oitem.contact1);
+                                        Avg4_2 += Convert.ToDouble(oitem.contact2);
+                                        Avg4_3 += Convert.ToDouble(oitem.contact3);
+                                        AvgD += Convert.ToDouble(Avg_D);
+                                        AvgE += Convert.ToDouble(overall);
+                                        AvgE5 += Convert.ToDouble(Total);
+                                    }
+                                    <tr>
+
+                                        <td class="total2"></td>
+
+                                        <td class="total2"></td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_1 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_2 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_3 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_4 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_5 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_6 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg1_7 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (AvgA / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg2_1 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg2_2 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg2_3 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg2_4 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (AvgB / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg3_1 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg3_2 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg3_3 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg3_4 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (AvgC / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg4_1 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg4_2 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (Avg4_3 / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (AvgD / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (AvgE / Model.mwge3.Count()))</td>
+
+                                        <td class="total2">@String.Format("{0:0.00}", (AvgE5 / Model.mwge3.Count()))</td>
+
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                            <div class="box-footer">
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " style="text-align:center;border:0px #006600 solid;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="text-align:center;height:40px;color:#F60;">
+                                        ผู้สรุป
+                                    </div>
+                                    @if (Model.sURVEY_REPORT.Date_Accept != null)
+                                    {
+
+                                        <div style="border-bottom:0px #CCCCCC solid;">
+
+                                            <img src="@Model.sURVEY_REPORT.pathUser" alt="Italian Trulli" width="164" height="80" />
+                                            <br>
+                                            @Model.sURVEY_REPORT.User_Accept
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                            <div>
+                                                @Model.sURVEY_REPORT.User_Accept
+                                            </div>
+                                            <h5>
+                                                @Model.Date
+                                            </h5>
+                                        </div>
+                                    }
+                                    <div style="text-align: center;">
+                                        @Model.sURVEY_REPORT.UserPosition
+                                    </div>
+                                    <br>
+                                    <div style="border-bottom:0px #CCCCCC solid;width:100%;">
+                                        @Model.sURVEY_REPORT.Date_Accept
+                                        <br>
+                                    </div>
+                                    <b>
+
+                                    </b>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 " style="text-align:center;border:0px #006600 solid;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="text-align:center;height:40px;color:#F60;">
+                                        ผู้อนุมัติ
+                                    </div>
+                                    @if (Session["Jobtitle"].ToString() == "Head of Marketing" || Session["Jobtitle"].ToString() == "Head of Food Industry Sales" || Session["Jobtitle"].ToString() == "Head of Food Service Sales" || Session["Jobtitle"].ToString() == "Head of Modern Trade")
+                                    {
+
+                                        if (Model.sURVEY_REPORT.Head_Approve != null)
+                                        {
+
+                                            <div style="border-bottom:0px #CCCCCC solid;">
+                                                <img src="@Model.sURVEY_REPORT.pathApprove" alt="Italian Trulli" width="164" height="80" />
+                                                <br>
+                                                @Session["Name"].ToString()
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding:10px; height:80px;">
+                                                    <button class="btn btn-success btn-block chsm" value="@Model.sURVEY_REPORT.ID_Report" name="Approve" id="Approve" onclick="return confirm('ยืนยันการส่ง ?')">Approve</button>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding:10px; height:80px;">
+                                                    <button class="btn btn-danger btn-block chsm" value="@Model.sURVEY_REPORT.ID_Report" name="button" id="button" onclick="return confirm('ยืนยันการส่ง ?')">Cancel</button>
+                                                </div>
+                                                <br>
+                                                @Session["Name"].ToString()
+                                            </div>
+                                        }
+
+                                        <div style="text-align: center;">
+                                            @Session["JobTitle"].ToString()
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        if (Model.sURVEY_REPORT.Head_Approve != null)
+                                        {
+
+                                            <div style="border-bottom:0px #CCCCCC solid;">
+                                                <img src="@Model.sURVEY_REPORT.pathApprove" alt="Italian Trulli" width="164" height="80" />
+                                                <br>
+                                                @Model.sURVEY_REPORT.Head_Approve
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="border-bottom:0px #CCCCCC solid;">
+                                                <img src="~/Files/1646114722735.jpg" alt="Italian Trulli" width="164" height="80" />
+                                                <br>
+                                                Head of Department
+                                            </div>
+                                            <div style="text-align: center;">
+                                                Requester’s Mgr. (ผจก.)
+                                            </div>
+                                        }
+                                    }
+                                    <div style="text-align: center;">
+                                        @Model.sURVEY_REPORT.ApprovePosition
+                                    </div>
+                                    <br>
+                                    <div style="border-bottom:0px #CCCCCC solid;width:100%;">
+                                        @DateTime.Now
+                                        <br>
+                                    </div>
+                                    <b>
+
+                                    </b>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
+                                    <a href="~/CR/Approve1?year=@Model.sURVEY_REPORT.Year_Survey1" class="btn btn-success chsm btn-block col-lg-12 col-md-12 col-sm-12 col-xs-12">BACK</a>
+                                </div>
+                                @if (Model.sURVEY_REPORT.Head_Approve == null)
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
+                                        <button class="btn btn-danger btn-block chsm col-lg-12 col-md-12 col-sm-12 col-xs-12 " value="@Model.sURVEY_REPORT.ID_Report" name="button" id="button" onclick="return confirm('ยืนยันการส่ง ?')">ยกเลิกรายการสรุป</button>
+                                    </div>
+                                    <!--
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
+                                        <button class="btn btn-info btn-block chsm col-lg-12 col-md-12 col-sm-12 col-xs-12 " value="@Model.sURVEY_REPORT.ID_Report" name="Sendemail" id="Sendemail" onclick="return confirm('ยืนยันการส่ง ?')">Send Email</button>
+                                    </div>
+                                    -->
+                                }
+                                else if (Session["JobTitle"].ToString() == "IT Programmer" || Session["JobTitle"].ToString() == "Sales Support Supervisor" || Session["JobTitle"].ToString() == "IT Manager (Corporate Service)")
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
+                                        <button class="btn btn-danger btn-block chsm col-lg-12 col-md-12 col-sm-12 col-xs-12 " value="@Model.sURVEY_REPORT.ID_Report" name="button" id="button" onclick="return confirm('ยืนยันการส่ง ?')">ยกเลิกรายการสรุป</button>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@section scripts{
+
+    <link rel="stylesheet" href="~/Content/adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <script type="text/javascript" src="~/Content/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/Content/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    @*Gridview*@
+    <script type="text/javascript">
+        /*$(document).ready(function () {
+            $('#odgvData').DataTable({
+                'paging': true,
+                'lengthChange': true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false,
+                language: {
+                    "zeroRecords": "ไม่มีข้อมูล"
+                },
+                stateSave: true
+                
+            });
+
+            $('#Paginator').on('click', 'a', function (even) {
+
+                var tPage = this.search;
+
+                if (tPage == "")
+                    return false;
+
+                tPage = tPage.replace("?", "");
+                tPage = tPage.split("&")[0].replace("page=", "");
+                $("#Page").val(tPage);
+                $("#obtnSearch").click();
+
+                //var radioValue = $("input[name='XVScanType']:checked").val();
+                //pmdoData = {
+                //    XVScanType: radioValue,
+                //    XVSearch: $("#XVSearch").val(),
+                //}
+
+                //$.ajax({
+                //    url: this.href,
+                //    type: 'POST',
+                //    data: pmdoData,
+                //    cache: false,
+                //    async: true,
+                //    error: function (jqXHR, error, errorThrown) {
+                //        //display error
+                //    },
+                //    success: function (data, textStatus, jqXHR) {
+                //        $("body").html(data);
+                //    }
+                //});
+                return false;
+            });
+        });*/
+    </script>
+}
+

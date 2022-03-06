@@ -1,0 +1,568 @@
+﻿@model WinnerSurvey.Models.L1.mWGE
+
+@{
+    if (Session["Name"] == null)
+    {
+        Layout = "~/Views/Shared/_AdminLte2.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_AdminLte.cshtml";
+    }
+}
+
+<script type="text/javascript">
+
+    function preventBack() {
+        window.history.forward();
+    }
+
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null
+    };
+    function check() {
+        let x = document.getElementById("textOther").value;
+        if (x == null || x=="") {
+            document.getElementById("othercheck").checked = false;
+        }
+        else {
+            document.getElementById("othercheck").checked = true;
+        }
+    };
+    function validChk() {
+        confirm('ยืนยันการบันทึก ?');
+		var chkBox = document.getElementsByName('checkbox');
+		var lenChkBox = chkBox.length;
+		//alert(lenChkBox)
+		var valid=0;
+		for(var i=0;i<lenChkBox;i++) {
+			if(chkBox[i].checked==true) {
+				valid=1;
+				break;
+			}
+		}
+        if (valid == 0) {
+            chkBox[0].required = true;
+        }
+        else {
+            for (var i = 0; i < lenChkBox; i++) {
+                chkBox[i].required = false;
+            }
+        }
+		return true;
+    };
+</script>
+
+@if (Model.mwge2.ListSurvey2 == null)
+{
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+
+            <div>
+                <a><img style="width:100%;position:relative" src="~/Content/adminlte/dist/img/header-logo.png" /></a>
+            </div>
+            <br />
+            @{
+                int year = Convert.ToInt32(Model.Year);
+            }
+            @if (year <= 2021)
+            {
+                <div>
+                    <div class="col-sm-12 col-md-12" style="text-align:center">
+                        <a><img style="width:50%;position:relative;" src="~/Files/close.jpg" /></a>
+                        <h1 style="color:red;">ระบบปิดรับข้อมูลแบบสอบถามปีแล้ว</h1>
+                    </div>
+                </div>
+            }
+            else
+            {
+                using (Html.BeginForm("getWinnerSurvey2"
+                            , "WGE"
+                            , FormMethod.Post
+                            , new { enctype = "multipart/form-data" }))
+                {
+
+                    <div class="box col-sm-12 col-md-12">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">FM-SL-019</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="row">
+
+                                <div class="text-center">
+                                    <br />
+                                    <label>แบบสำรวจความพึงพอใจของผู้บริโภคโดยตรงต่อผลิตภัณฑ์ของบริษัท วินเนอร์กรุ๊ป เอ็นเตอร์ไพรซ์จำกัด (มหาชน)</label>
+                                </div>
+                                <div class="col-md-offset-6 text-center">
+                                    <br /><br />
+
+                                    @{
+                                        string date = Model.Date.ToString("dd-MM-yyyy");
+                                    }
+
+                                    <p>วันที่ @date</p>
+                                    <input hidden name="mwge2.CS2.Date" value="@date" />
+
+                                </div>
+                                <div>
+                                    <br />
+                                    <p style="text-indent:2.5em">บริษัท วินเนอร์กรุ๊ป เอ็นเตอร์ไพรซ์ จำกัด ( มหาชน) เป็นผู้นำเข้าผลิตภัณฑ์อาหารสำเร็จรูปจากหลายประเทศทั่วโลก อาทิ ข้าวโพดป๊อปซีเคร็ท, แยม สตรีมไลน์  ใคร่ขอรบกวนเวลาท่านในการตอบแบบสอบถามสักเล็กน้อย เพื่อบริษัทฯ จะได้นำไปปรับปรุงการทำธุรกิจ เพื่อตอบสนองความต้องการของท่านต่อไป</p>
+                                    <p style="text-indent:2.5em">ขอขอบพระคุณอย่างสูง</p>
+                                </div>
+                                <br /><br /><br /><br />
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+
+                            <div class="row" style="display:none">
+                                <input name="Year" value="@Model.Year" />
+                            </div>
+
+                            @if (Model.Code != null)
+                            {
+                                <div class="row" style="display:none">
+                                    <input name="Code" value="@Model.Code" />
+                                </div>
+                            }
+
+                            <div class="row">
+                                <br />
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label class="col-sm-12 col-md-3" style="text-align:center">ชื่อผู้ให้สัมภาษณ์</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" name="mwge2.CS2.Name" class="form-control" maxlength="50" id="inputname" value="" autocomplete="off" required placeholder="ชื่อผู้ให้สัมภาษณ์">
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label class="col-sm-12 col-md-3" style="text-align:center">Email</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" name="mwge2.CS2.Email" class="form-control" maxlength="50" id="inputname" value="" autocomplete="off" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label class="col-sm-12 col-md-3" style="text-align:center">โทรศัพท์</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <input type="text" name="mwge2.CS2.Tel" class="form-control" maxlength="20" id="inputname" value="" autocomplete="off" placeholder="โทรศัพท์">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label class="col-sm-12 col-md-3" style="text-align:center">อายุ</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <select class="form-control" name="mwge2.CS2.Age" required>
+                                            <option hidden></option>
+                                            <option>< 25 ปี</option>
+                                            <option>25-30 ปี</option>
+                                            <option>31-35 ปี</option>
+                                            <option>36-40 ปี</option>
+                                            <option>41-45 ปี</option>
+                                            <option>46-50 ปี</option>
+                                            <option>> 50 ปี</option>
+                                            <option>ไม่ระบุ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6">
+                                    <label class="col-sm-12 col-md-3" style="text-align:center">รายได้ของครอบครัวต่อเดือน</label>
+                                    <div class="col-sm-12 col-md-9">
+                                        <select class="form-control" name="mwge2.CS2.Salary" required>
+                                            <option hidden></option>
+                                            <option>< 35,000 บาท</option>
+                                            <option>35,001-50,000 บาท</option>
+                                            <option>50,001-65,000 บาท</option>
+                                            <option>65,001-80,000 บาท</option>
+                                            <option>> 80,000 บาท</option>
+                                            <option>ไม่ระบุ</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br />
+                        </div>
+                    </div>
+
+                    <div class="box col-sm-12 col-md-12">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">ส่วนที่ 1 - ท่านรู้จักสินค้าใดต่อไปนี้บ้าง</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        @{
+                            string[] product1 = new string[] { "แยมทาขนมปังนำเข้า", "ข้าวโพดในไมโครเวฟ", "สาหร่ายทะเลปรุงรส", "สาหร่ายทะเลปรุงรส", "เส้นพาสต้าและมักกะโรนี", "น้ำผลไม้นำเข้า", "น้ำแครนเบอร์รี่", "ซอสปรุงรส", "บะหมี่กึ่งสำเร็จรูป" };
+                            string[] product2 = new string[] { "สตรีมไลน์", "ป็อปซีเคร็ท", "คิมโนริ","ซีเฟรนด์", "คัมพาน่า", "ฮาวีเฟรช", "แลงเจอร์", "พีอาร์พี", "Baixiang" };
+                        }
+
+                        <div class="box-body">
+                            <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
+                                <br />
+                                <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="text-center">สินค้า</th>
+                                            <th class="text-center">เลือก</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @for (int i = 0; i < product1.Count(); i++)
+                                        {
+                                            <tr>
+                                                <td style="text-align:center;width:50%">@product1[i] - @product2[i]</td>
+                                                <td style="text-align:center;width:50%"><input type="checkbox" name="checkbox" value="@product1[i] - @product2[i]" style="transform:scale(2.0)" /></td>
+                                            </tr>
+                                        }
+
+                                        <tr>
+                                            <td style="width:50%"><input type="text" name="textOther" id="textOther" onkeyup="check();" class="form-control" placeholder="อื่นๆ โปรดระบุ" /></td>
+                                            <td style="text-align:center;width:50%"><input type="checkbox" name="checkbox" value="other" id="othercheck" style="transform:scale(2.0)" /></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="box col-sm-12 col-md-12">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">ส่วนที่ 2 - จากผลิตภัณฑ์ที่ท่านรู้จักข้างต้นท่านมีความคิดเห็นในด้านต่างๆ อย่างไร</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="box-body">
+                            <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
+                                <br />
+                                <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th></th>
+                                            <th class="text-center">5 <br />พอใจอย่างยิ่ง</th>
+                                            <th class="text-center">4 <br />พอใจ</th>
+                                            <th class="text-center">3 <br />เฉยๆ</th>
+                                            <th class="text-center">2 <br />ไม่ค่อยน่าพอใจ</th>
+                                            <th class="text-center">1 <br />ไม่พอใจอย่างยิ่ง</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @{
+
+                                            string[] textp2 = new string[] 
+                                            {
+                                                "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้",
+                                                "รสชาติของสินค้าอร่อยถูกใจ",
+                                                "คุณภาพสินค้าสม่ำเสมอทุกครั้งที่ซื้อ",
+                                                "หีบห่อบรรจุภัณฑ์อยู่ในสภาพสมบูรณ์",
+                                                "มีสินค้าที่สดใหม่เสมอให้ท่านเลือกซื้อ",
+                                                "สามารถหาซื้อสินค้าที่ท่านต้องการได้",
+                                                "สามารถหาข้อมูลเกี่ยวกับสินค้าได้สะดวก",
+                                                "สินค้าคุ้มค่า / คุ้มราคา",
+                                                "มีรายการส่งเสริมการขายที่ดี /น่าสนใจ",
+                                                "มีของแจกแถมที่น่าสนใจ"
+                                            };
+
+                                            for (int i = 0; i < textp2.Count(); i++)
+                                            {
+                                                int integer = i + 1;
+                                                string radio = "mwge2.CS2.Rate_" + integer;
+
+                                                <tr>
+                                                    <td align="center">@textp2[i]</td>
+                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="5" required></td>
+                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="4"></td>
+                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="3"></td>
+                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="2"></td>
+                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="1"></td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <div class="row">
+                                <br />
+                                <div class="form-group col-sm-12 col-md-12">
+                                    <label class="col-sm-12 col-md-2" style="text-align:center">รายละเอียดเพิ่มเติม</label>
+                                    <div class="col-sm-12 col-md-10">
+                                        <textarea class="form-control" rows="5" maxlength="1000" name="mwge2.CS2.Remark"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="pull-right">
+                        <div class="col-sm-12 col-md-12">
+                            <button type="submit" class="btn btn-info" onclick="validChk();" role="button">บันทึก</button>
+                        </div>
+                        <div class="col-sm-12 col-md-12" style="padding:20px">
+                            <br />
+                            <b style="text-align:left" class="pull-left">Rev.01,/APR 01,22</b>
+                            <b style="text-align:right" class="pull-right">อายุการเก็บเอกสาร 1 ปี</b>
+                        </div>
+                    </div>
+
+
+
+                }
+            }
+
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+
+            <div>
+                <a><img style="width:100%;position:relative" src="~/Content/adminlte/dist/img/header-logo.png" /></a>
+            </div>
+            <br />
+
+            <div class="box col-sm-12 col-md-12">
+                <div class="box-header with-border">
+                    <h3 class="box-title">FM-SL-019</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="text-center">
+                            <br />
+                            <label>แบบสำรวจความพึงพอใจของผู้บริโภคโดยตรงต่อผลิตภัณฑ์ของบริษัท วินเนอร์กรุ๊ป เอ็นเตอร์ไพรซ์จำกัด (มหาชน)</label>
+                        </div>
+                        <div class="col-md-offset-6 text-center">
+                            <br /><br />
+
+                            @{
+                                string date;
+
+                                if (Model.mwge2.ListSurvey2.Count > 0)
+                                {
+                                    date = Model.mwge2.ListSurvey2[0].Date.Value.ToString("dd-MM-yyyy");
+                                }
+                                else
+                                {
+                                    date = Model.Date.ToString("dd-MM-yyyy");
+                                }
+                            }
+
+                            <p>วันที่ @date</p>
+                            <input hidden name="mwge2.CS2.Date" value="@date" />
+                        </div>
+                        <div>
+                            <br />
+                            <p style="text-indent:2.5em">บริษัท วินเนอร์กรุ๊ป เอ็นเตอร์ไพรซ์ จำกัด ( มหาชน) เป็นผู้นำเข้าผลิตภัณฑ์อาหารสำเร็จรูปจากหลายประเทศทั่วโลก อาทิ ข้าวโพดป๊อปซีเคร็ท, แยม สตรีมไลน์  ใคร่ขอรบกวนเวลาท่านในการตอบแบบสอบถามสักเล็กน้อย เพื่อบริษัทฯ จะได้นำไปปรับปรุงการทำธุรกิจ เพื่อตอบสนองความต้องการของท่านต่อไป</p>
+                            <p style="text-indent:2.5em">ขอขอบพระคุณอย่างสูง</p>
+                        </div>
+                        <br /><br /><br /><br />
+                    </div>
+                </div>
+
+                <div class="box-footer">
+
+                    <div class="row" style="display:none">
+                        <input name="Year" value="@Model.Year" />
+                    </div>
+                    <div class="row">
+                        <br />
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label class="col-sm-12 col-md-3" style="text-align:center">ชื่อผู้ให้สัมภาษณ์</label>
+                            <div class="col-sm-12 col-md-9">
+                                <input type="text" name="mwge2.CS2.Name" class="form-control" maxlength="50" id="inputname" value="@Model.mwge2.ListSurvey2[0].Name" readonly autocomplete="off" required placeholder="ชื่อผู้ให้สัมภาษณ์">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label class="col-sm-12 col-md-3" style="text-align:center">Email</label>
+                            <div class="col-sm-12 col-md-9">
+                                <input type="text" name="mwge2.CS2.Email" class="form-control" maxlength="50" id="inputname" value="@Model.mwge2.ListSurvey2[0].Email" readonly autocomplete="off" required placeholder="Email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label class="col-sm-12 col-md-3" style="text-align:center">โทรศัพท์</label>
+                            <div class="col-sm-12 col-md-9">
+                                <input type="text" name="mwge2.CS2.Tel" class="form-control" maxlength="20" id="inputname" value="@Model.mwge2.ListSurvey2[0].Tel" readonly autocomplete="off" required placeholder="โทรศัพท์">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label class="col-sm-12 col-md-3" style="text-align:center">อายุ</label>
+                            <div class="col-sm-12 col-md-9">
+                                <select class="form-control" name="mwge2.CS2.Age" disabled required>
+                                    <option hidden>@Model.mwge2.ListSurvey2[0].Age</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6">
+                            <label class="col-sm-12 col-md-3" style="text-align:center">รายได้ของครอบครัวต่อเดือน</label>
+                            <div class="col-sm-12 col-md-9">
+                                <select class="form-control" name="mwge2.CS2.Salary" disabled required>
+                                    <option hidden>@Model.mwge2.ListSurvey2[0].Salary</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+
+            <div class="box col-sm-12 col-md-12">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ส่วนที่ 1 - ท่านรู้จักสินค้าใดต่อไปนี้บ้าง</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                @{
+                    string[] product1 = new string[] { "แยมทาขนมปังนำเข้า", "ข้าวโพดในไมโครเวฟ", "สาหร่ายทะเลปรุงรส", "เส้นพาสต้าและมักกะโรนี", "น้ำผลไม้นำเข้า", "น้ำแครนเบอร์รี่" };
+                    string[] product2 = new string[] { "สตรีมไลน์", "ป็อปซีเคร็ท", "คิมโนริ/ ซีเฟรนด์", "คัมพาน่า", "ฮาวีเฟรช", "แลงเจอร์" };
+
+                }
+
+                <div class="box-body">
+                    <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
+                        <br />
+                        <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th class="text-center">สินค้า</th>
+                                    <th class="text-center">เลือก</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model.mwge2.ListSurvey2)
+                                {
+                                    <tr>
+                                        <td style="text-align:center;width:50%">@item.Detail</td>
+                                        <td style="text-align:center;width:50%"><input type="checkbox" checked disabled style="transform:scale(2.0)" /></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="box col-sm-12 col-md-12">
+                <div class="box-header with-border">
+                    <h3 class="box-title">ส่วนที่ 2 - จากผลิตภัณฑ์ที่ท่านรู้จักข้างต้นท่านมีความคิดเห็นในด้านต่างๆ อย่างไร</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
+                        <br />
+                        <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                            <thead>
+                                <tr role="row">
+                                    <th></th>
+                                    <th class="text-center">5 <br />พอใจอย่างยิ่ง</th>
+                                    <th class="text-center">4 <br />พอใจ</th>
+                                    <th class="text-center">3 <br />เฉยๆ</th>
+                                    <th class="text-center">2 <br />ไม่ค่อยน่าพอใจ</th>
+                                    <th class="text-center">1 <br />ไม่พอใจอย่างยิ่ง</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+
+                                    string[] textp2 = new string[] { "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้", "รสชาติของสินค้าอร่อยถูกใจ", "คุณภาพสินค้าสม่ำเสมอทุกครั้งที่ซื้อ", "หีบห่อบรรจุภัณฑ์อยู่ในสภาพสมบูรณ์", "มีสินค้าที่สดใหม่เสมอให้ท่านเลือกซื้อ",
+                                                                                         "สามารถหาซื้อสินค้าที่ท่านต้องการได้","สามารถหาข้อมูลเกี่ยวกับสินค้าได้สะดวก","สินค้าคุ้มค่า / คุ้มราคา","มีรายการส่งเสริมการขายที่ดี /น่าสนใจ","มีของแจกแถมที่น่าสนใจ"};
+                                    string[] rate = new string[] { Model.mwge2.ListSurvey2[0].Rate_1, Model.mwge2.ListSurvey2[0].Rate_2, Model.mwge2.ListSurvey2[0].Rate_3, Model.mwge2.ListSurvey2[0].Rate_4,
+                                                                       Model.mwge2.ListSurvey2[0].Rate_5,Model.mwge2.ListSurvey2[0].Rate_6,Model.mwge2.ListSurvey2[0].Rate_7,Model.mwge2.ListSurvey2[0].Rate_8,
+                                                                       Model.mwge2.ListSurvey2[0].Rate_9,Model.mwge2.ListSurvey2[0].Rate_10};
+
+                                    for (int i = 0; i < textp2.Count(); i++)
+                                    {
+                                        int integer = i + 1;
+                                        string radio = "mwge2.CS2.Rate_" + integer;
+
+                                        <tr>
+                                            <td align="center">@textp2[i]</td>
+                                            <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" @if (rate[i] == "5") { <text> checked </text> } disabled class="radio" id="inputname" value="5"></td>
+                                            <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" @if (rate[i] == "4") { <text> checked </text> } disabled class="radio" id="inputname" value="4"></td>
+                                            <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" @if (rate[i] == "3") { <text> checked </text> } disabled class="radio" id="inputname" value="3"></td>
+                                            <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" @if (rate[i] == "2") { <text> checked </text> } disabled class="radio" id="inputname" value="2"></td>
+                                            <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" @if (rate[i] == "1") { <text> checked </text> } disabled class="radio" id="inputname" value="1"></td>
+                                        </tr>
+                                    }
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <div class="row">
+                        <br />
+                        <div class="form-group col-sm-12 col-md-12">
+                            <label class="col-sm-12 col-md-2" style="text-align:center">รายละเอียดเพิ่มเติม</label>
+                            <div class="col-sm-12 col-md-10">
+                                <textarea class="form-control" rows="5" maxlength="1000" readonly>@Model.mwge2.ListSurvey2[0].Remark</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Raw(TempData["msg"])

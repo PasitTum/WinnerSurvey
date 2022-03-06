@@ -1,0 +1,61 @@
+﻿@model WinnerSurvey.Models.L1.mWGE
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function back() {
+        window.history.back();
+    }
+
+</script>
+
+@Html.Raw(TempData["msg"])
+
+<body onload="onload();">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">แก้ไข Email</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="box-body">
+
+                    @using (Html.BeginForm("getEmail"
+                                , "WGE"
+                                , FormMethod.Post
+                                , new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label>CardName</label>
+                                <input type="text" name="cardcode" class="form-control" readonly value="@Model.mwge2.OCRD.CardCode" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label>CardName</label>
+                                <input type="text" name="cardname" class="form-control" readonly value="@Model.mwge2.OCRD.CardName" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" value="@Model.mwge2.OCRD.Email" autocomplete="off" required placeholder="email">
+                            </div>
+                            <div hidden>
+                                <input name="year" value="@Model.Year" />
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-info pull-right" name="button" onclick="return confirm('คุณต้องการบันทึก?');">บันทึก</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,109 @@
+﻿@{
+    /**/
+
+    Layout = null;
+}
+
+@Html.Raw(TempData["msg"])
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+
+    function remember() {
+
+        if ($('#rememberMe').is(':checked')) {
+            // save username and password
+            localStorage.userName = $('#id').val();
+            localStorage.password = $('#password').val();
+            localStorage.checkBoxValidation = $('#rememberMe').val();
+        } else {
+            localStorage.userName = '';
+            localStorage.password = '';
+            localStorage.checkBoxValidation = '';
+        }
+    }
+
+    function loadremember() {
+
+        if (localStorage.length != 0) {
+            if (localStorage.userName != '' && localStorage.password != '' && localStorage.checkBoxValidation != '') {
+                document.getElementById("id").value = localStorage.userName;
+                document.getElementById("password").value = localStorage.password;
+                document.getElementById("rememberMe").checked = true;
+            }
+        }
+    }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/login-form-03/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="~/Content/login-form-03/css/owl.carousel.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/login-form-03/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="~/Content/login-form-03/css/style.css">
+    <title>Winnergroup - Survey</title>
+</head>
+<body onload="loadremember();">
+
+    <div class="half">
+        <div class="bg order-1 order-md-2" style="background-image: url(../../Content/login-form-03/images/bg_1.jpg);"></div>
+        <div class="contents order-2 order-md-1">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-6">
+                        <div class="form-block">
+
+                            <div class="text-center mb-5">
+                                <h3>Login to <strong>Winner Survey</strong></h3>
+                                <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
+                            </div>
+
+                            @using (Html.BeginForm("LoginCheck"
+                                      , "Account"
+                                      , FormMethod.Post
+                                      , new { id = "oForm", @class = "login100-form validate-form" }))
+                            {
+                            <div class="form-group first">
+                                <label for="username">Username</label>
+                                <input type="text" name="textuser" id="textuser" style="border-width:0px; border:none;" />
+                                <input type="text" class="form-control" name="ID" id="id" autocomplete="off" autofocus placeholder="Enter username">
+                            </div>
+                                <div class="form-group last mb-3">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" name="Password" id="password" placeholder="Enter password">
+                                </div>
+
+                                <div class="d-sm-flex mb-5 align-items-center">
+                                    <label class="control control--checkbox mb-3 mb-sm-0">
+                                        <span class="caption">Remember me</span>
+                                        <input type="checkbox" id="rememberMe" name="remember-me" />
+                                        <div class="control__indicator"></div>
+                                    </label>
+                                </div>
+                                <input type="submit" value="Log In" class="btn btn-block btn-primary" onclick="remember()">
+                                
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/Content/login-form-03/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/login-form-03/js/popper.min.js"></script>
+    <script src="~/Content/login-form-03/js/bootstrap.min.js"></script>
+    <script src="~/Content/login-form-03/js/main.js"></script>
+
+</body>
+</html>
+

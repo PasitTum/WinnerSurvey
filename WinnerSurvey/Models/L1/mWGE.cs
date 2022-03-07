@@ -23,7 +23,11 @@ namespace WinnerSurvey.Models.L1
         public List<C_WGE_SURVEY_REPORT> List_Survey_Report { get; set; }
 
         public List<Detail> mwge3 { get; set; }
+
         public C_WGE_SURVEY_REPORT sURVEY_REPORT { get; set; }
+
+        public string Decode { get; set; }
+        public string NumberID { get; set; }
     }
 
     public class mWGE1

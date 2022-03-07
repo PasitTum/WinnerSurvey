@@ -114,7 +114,6 @@ namespace WinnerSurvey.Controllers
                                         Session["SaleCode"] = "";
                                         Session["SaleName"] = "";
                                     }
-
                                     //group
                                     PrincipalSearchResult<Principal> groups = user.GetGroups();
                                     foreach (Principal p in groups)

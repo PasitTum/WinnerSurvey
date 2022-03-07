@@ -286,7 +286,9 @@ namespace WinnerSurvey.Controllers
                     
 
                                 mData.Year = year.ToString();
-
+                                mData.Decode = cardcode;
+                                mData.Code = code;
+                                mData.NumberID = numberid;
                                 if (cardcode != null && numberid == null)
                                 {
                                     string decode = DecodeFrom64(cardcode);
@@ -346,6 +348,7 @@ namespace WinnerSurvey.Controllers
 
                                         mData.mwge1.OCRD = oData2;
                                         mData.Date = DateTime.Now;
+                                        
 
                                         return View(mData);
                                     }
@@ -363,7 +366,7 @@ namespace WinnerSurvey.Controllers
                                         }
                                     }
                                 }
-                                else if (cardcode == null && numberid != null) //กรณีไม่มี cardcode
+                                else if (cardcode == null && numberid != null && code != null) //กรณีไม่มี cardcode
                                 {
                                     string decode = DecodeFrom64(numberid);
 
@@ -425,26 +428,15 @@ namespace WinnerSurvey.Controllers
                                         }
                                         else
                                         {
-                                            TempData["msg"] = "<script>alert('Not Found!');</script>";
-                                            return RedirectToAction("Index2", "Home");
+                                            return RedirectToAction("WinnerSurvey1", new { year = year, code = code ,cardcode = cardcode});
                                         }
                                     }
                                 }
                                 else
                                 {
                                     mData.Date = DateTime.Now;
-
-                                    if (code != null)
-                                    {
-                                        string Code = code;
-                                        mData.Code = Code;
-
-                                        return View(mData);
-                                    }
-                                    else
-                                    {
-                                        return View(mData);
-                                    }
+                                    return View(mData);
+                                    
                                 }
                     
                     
@@ -550,7 +542,7 @@ namespace WinnerSurvey.Controllers
                     db.SaveChanges();
 
                     TempData["msg"] = "<script>alert('Success!');</script>";
-                    return RedirectToAction("WinnerSurvey1", new { year = data.Year, numberid = EncodePasswordToBase64(datetime) });
+                    return RedirectToAction("WinnerSurvey1", new { year = data.Year, numberid = EncodePasswordToBase64(datetime), code= data.Code });
                 }
             }
             catch (Exception ex)

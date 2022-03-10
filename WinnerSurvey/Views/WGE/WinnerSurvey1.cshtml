@@ -54,7 +54,26 @@
     };
 
 </script>
+<style>
+    @@media print {
+        #noprint {
+            display: none;
+        }
 
+        #padding-print {
+            padding: 0px;
+        }
+
+        html, body {
+            width: 210mm;
+            height: 297mm;
+        }
+
+        #box-onprint {
+            padding: 20px;
+        }
+    }
+</style>
 @if (Model.mwge1.OCRD == null && Model.mwge2.ListSurvey1 == null)
 {
     <div class="row">
@@ -100,7 +119,7 @@
                             <h3 class="box-title">FM-SL-018</h3>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <button type="button" class="btn btn-box-tool" id="noprint" data-widget="collapse">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
@@ -124,7 +143,6 @@
                                     <input hidden name="mwge2.CS1.Date" value="@Model.Date" />
                                 </div>
                                 <div>
-                                    <p>@Model.Code</p>
                                     <br />
                                     <p style="text-indent:2.5em">ในนามบริษัท วินเนอร์กรุ๊ป เอ็นเตอร์ไพรซ์ จำกัด ( มหาชน ) ผมต้องขอแสดงความขอบพระคุณท่านที่ให้การสนับสนุนผลิตภัณฑ์ และทีมงานของบริษัทฯ ด้วยดีตลอดมา</p>
                                     <p style="text-indent:2.5em">บริษัทฯ มีเป้าหมายในการพัฒนาการทำธุรกิจและตอบสนองความต้องการของลูกค้าให้ดียิ่งขึ้น ผมจึงใคร่ขอรบกวนเวลาท่านในการตอบแบบสอบถามเกี่ยวกับผลิตภัณฑ์และการบริการที่ท่านได้รับในช่วงเวลาที่ผ่านมาซึ่งข้อมูลเหล่านี้จะถูกนำไปประมวลร่วมกับลูกค้าทุกรายของบริษัทฯ เพื่อการแก้ไขปรับปรุงเป็นประการสำคัญ</p>
@@ -149,7 +167,7 @@
                             <h3 class="box-title">ส่วนที่ 1 - ข้อมูลทั่วไป</h3>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <button type="button" class="btn btn-box-tool" id="noprint" data-widget="collapse">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
@@ -232,22 +250,22 @@
 
                                 case "2021":
                                     product1 = new string[] { "แยมทาขนมปังนำเข้า", "ข้าวโพดในไมโครเวฟ", "สาหร่ายทะเลปรุงรส", "เส้นพาสต้าและมักกะโรนี", "น้ำผลไม้นำเข้า",
-                                                                                               "น้ำแครนเบอร์รี่" ,"AVEBE Potato Starch", "JB Cocoa Powder", "Prima Wheat Flour", "Manildra Wheat Starch",
-                                                                                               "CP KelcoBiogum","Nouryon CMC","Pakmaya Yeast","Mariana Shortening &Margarine","Bamboo Tree Icing Sugar",
-                                                                                               "Panda Kid Baking Powder" };
+                                                                                                   "น้ำแครนเบอร์รี่" ,"AVEBE Potato Starch", "JB Cocoa Powder", "Prima Wheat Flour", "Manildra Wheat Starch",
+                                                                                                   "CP KelcoBiogum","Nouryon CMC","Pakmaya Yeast","Mariana Shortening &Margarine","Bamboo Tree Icing Sugar",
+                                                                                                   "Panda Kid Baking Powder" };
                                     product2 = new string[] { "สตรีมไลน์", "ป็อปซีเคร็ท", "คิมโนริ/ ซีเฟรนด์", "คัมพาน่า", "ฮาวีเฟรช",
-                                                                                               "แลงเจอร์","แป้งมันฝรั่ง", "ผงโกโก้", "แป้งสาลี(flour)", "แป้งสาลี(starch)",
-                                                                                               "แซนแทน/เจลแลน กัม","ซีเอ็มซี","ยีสต์","เนยขาว/เนยแหลือง","น้ำตาลไอซิ่ง",
-                                                                                               "ผงฟู" };
+                                                                                                   "แลงเจอร์","แป้งมันฝรั่ง", "ผงโกโก้", "แป้งสาลี(flour)", "แป้งสาลี(starch)",
+                                                                                                   "แซนแทน/เจลแลน กัม","ซีเอ็มซี","ยีสต์","เนยขาว/เนยแหลือง","น้ำตาลไอซิ่ง",
+                                                                                                   "ผงฟู" };
                                     break;
                                 case "2022":
 
                                     product1 = new string[] { "แยมทาขนมปังนำเข้า", "ข้าวโพดในไมโครเวฟ", "สาหร่ายทะเลปรุงรส", "เส้นพาสต้าและมักกะโรนี", "น้ำผลไม้นำเข้า",
-                                                                                               "น้ำแครนเบอร์รี่","Starch & Flour","Egg Powder","Cocoa Powder & Chocolate","Fat& Oil","Leavening Agent"
-                                                                                                ,"Stabilizer & Gelling Agent","Sugar & Sweetener","Baking Powder","Forzen Product","Dry Frui + Nut","Preservative"};
+                                                                                                   "น้ำแครนเบอร์รี่","Starch & Flour","Egg Powder","Cocoa Powder & Chocolate","Fat& Oil","Leavening Agent"
+                                                                                                    ,"Stabilizer & Gelling Agent","Sugar & Sweetener","Baking Powder","Forzen Product","Dry Frui + Nut","Preservative"};
                                     product2 = new string[] { "สตรีมไลน์", "ป็อปซีเคร็ท", "คิมโนริ/ ซีเฟรนด์", "คัมพาน่า", "ฮาวีเฟรช",
-                                                                                               "แลงเจอร์","แป้งมันฝรั่ง และ แป้งสาลี","ผลิตภัณฑ์ไข่","ผงโกโก้ และ ช็อกโกแลต","เนยขาว / เนยเหลือง / น้ำมันมะกอก / น้ำมันงา","ยีสต์ / สารเสริมขนมปัง",
-                                                                                                "แซนแทนกัม / เจลแลนกัม / ซีเอ็มซี","น้ำตาลไอซิ่ง / สารแทนความหวาน","ผงฟู","สินค้าแช่แข็ง","สินค้าลูกเกด / เมล็ดและถั่วต่างๆ","สารกันบูด"};
+                                                                                                   "แลงเจอร์","แป้งมันฝรั่ง และ แป้งสาลี","ผลิตภัณฑ์ไข่","ผงโกโก้ และ ช็อกโกแลต","เนยขาว / เนยเหลือง / น้ำมันมะกอก / น้ำมันงา","ยีสต์ / สารเสริมขนมปัง",
+                                                                                                    "แซนแทนกัม / เจลแลนกัม / ซีเอ็มซี","น้ำตาลไอซิ่ง / สารแทนความหวาน","ผงฟู","สินค้าแช่แข็ง","สินค้าลูกเกด / เมล็ดและถั่วต่างๆ","สารกันบูด"};
                                     break;
                                 default:
                                     product1 = new string[] { "" };
@@ -290,6 +308,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="col-sm-12 col-md-12" style="padding:20px;" id="box-onprint">
+
+                            </div>
                         </div>
 
                     </div>
@@ -299,7 +320,7 @@
                     string[] Eheader = new string[] { "Product", "Transport", "Service", "Com" };
 
                     string[] textp2 = new string[7] { "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้", "รสชาติของสินค้าดีเป็นที่ต้องการของลูกค้า", "มีสินค้าที่สดใหม่เสมอ", "มีสินค้าส่งตามที่ท่านต้องการเสมอ",
-                  "สามารถสร้างผลกำไรที่น่าพอใจ", "มีสินค้าที่หลากหลายแปลกใหม่", "คุณภาพสินค้าสม่ำเสมอทุกครั้ง" };
+              "สามารถสร้างผลกำไรที่น่าพอใจ", "มีสินค้าที่หลากหลายแปลกใหม่", "คุณภาพสินค้าสม่ำเสมอทุกครั้ง" };
 
                     string[] textp3 = new string[4] { "การจัดส่งสินค้าตรงตามเวลาและสถานที่", "ความถูกต้องครบถ้วนของสินค้าที่จัดส่ง", "สภาพสินค้าและการป้องกันไม่ให้เสียหาย", "พนักงานจัดส่งมีกิริยามารยาทเรียบร้อย" };
 
@@ -320,7 +341,7 @@
                                 <h3 class="box-title">ส่วนที่ @part - @header[i]</h3>
 
                                 <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                    <button type="button" id="noprint" class="btn btn-box-tool" data-widget="collapse">
                                         <i class="fa fa-minus"></i>
                                     </button>
                                 </div>
@@ -362,7 +383,7 @@
                                 </div>
                             </div>
 
-                            <div class="box-footer">
+                            <div class="col-sm-12 col-md-12">
                                 <div class="row">
                                     <br />
                                     <div class="form-group col-sm-12 col-md-12">
@@ -376,16 +397,19 @@
                         </div>
 
                     }
-
-                    <div class="col-sm-12 col-md-12">
-
-                        <div class="col-sm-12 col-md-12 pull-right">
-                            <button type="submit" class="btn btn-info pull-right" onclick="validChk()" role="button">บันทึก</button>
-                        </div>
-                        <div class="col-sm-12 col-md-12" style="padding:20px">
+                    <div class="box-footer">
+                        <div class="col-sm-12 col-md-12" id="padding-print">
                             <br />
                             <b style="text-align:left" class="pull-left">Rev.01,/APR 01,22</b>
                             <b style="text-align:right" class="pull-right">อายุการเก็บเอกสาร 1 ปี</b>
+                        </div>
+                    </div>
+                    <div style="padding:10px">
+                        <div class="col-sm-12 col-md-12">
+                            <div class="col-sm-12 col-md-12 pull-right" id="noprint">
+                                <button type="submit" class="btn btn-info pull-right" onclick="validChk()" role="button">บันทึก</button>
+                            </div>
+
                         </div>
                     </div>
 
@@ -583,42 +607,42 @@ else
                         @{
                             string[] product1 = new string[]
                             {
-                                            "แยมทาขนมปังนำเข้า",
-                                            "ข้าวโพดในไมโครเวฟ",
-                                            "สาหร่ายทะเลปรุงรส",
-                                            "เส้นพาสต้าและมักกะโรนี",
-                                            "น้ำผลไม้นำเข้า",
-                                            "น้ำแครนเบอร์รี่" ,
-                                            "AVEBE Potato Starch",
-                                            "JB Cocoa Powder",
-                                            "Prima Wheat Flour",
-                                            "Manildra Wheat Starch",
-                                            "CP KelcoBiogum",
-                                            "Nouryon CMC",
-                                            "Pakmaya Yeast",
-                                            "Mariana Shortening &Margarine",
-                                            "Bamboo Tree Icing Sugar",
-                                            "Panda Kid Baking Powder"
-                            };
+                                                "แยมทาขนมปังนำเข้า",
+                                                "ข้าวโพดในไมโครเวฟ",
+                                                "สาหร่ายทะเลปรุงรส",
+                                                "เส้นพาสต้าและมักกะโรนี",
+                                                "น้ำผลไม้นำเข้า",
+                                                "น้ำแครนเบอร์รี่" ,
+                                                "AVEBE Potato Starch",
+                                                "JB Cocoa Powder",
+                                                "Prima Wheat Flour",
+                                                "Manildra Wheat Starch",
+                                                "CP KelcoBiogum",
+                                                "Nouryon CMC",
+                                                "Pakmaya Yeast",
+                                                "Mariana Shortening &Margarine",
+                                                "Bamboo Tree Icing Sugar",
+                                                "Panda Kid Baking Powder"
+                        };
                             string[] product2 = new string[]
                             {
-                                            "สตรีมไลน์",
-                                            "ป็อปซีเคร็ท",
-                                            "คิมโนริ/ ซีเฟรนด์",
-                                            "คัมพาน่า",
-                                            "ฮาวีเฟรช",
-                                            "แลงเจอร์",
-                                            "แป้งมันฝรั่ง",
-                                            "ผงโกโก้",
-                                            "แป้งสาลี(flour)",
-                                            "แป้งสาลี(starch)",
-                                            "แซนแทน/เจลแลน กัม",
-                                            "ซีเอ็มซี",
-                                            "ยีสต์",
-                                            "เนยขาว/เนยแหลือง",
-                                            "น้ำตาลไอซิ่ง",
-                                            "ผงฟู"
-                            };
+                                                "สตรีมไลน์",
+                                                "ป็อปซีเคร็ท",
+                                                "คิมโนริ/ ซีเฟรนด์",
+                                                "คัมพาน่า",
+                                                "ฮาวีเฟรช",
+                                                "แลงเจอร์",
+                                                "แป้งมันฝรั่ง",
+                                                "ผงโกโก้",
+                                                "แป้งสาลี(flour)",
+                                                "แป้งสาลี(starch)",
+                                                "แซนแทน/เจลแลน กัม",
+                                                "ซีเอ็มซี",
+                                                "ยีสต์",
+                                                "เนยขาว/เนยแหลือง",
+                                                "น้ำตาลไอซิ่ง",
+                                                "ผงฟู"
+                        };
                         }
 
                         <div class="box-footer">
@@ -668,130 +692,130 @@ else
 
                     </div>
 
-                            string[] header = new string[4]
-                            {
-                                "จากผลิตภัณฑ์ที่ท่านรู้จักข้างต้นท่านมีความคิดเห็นในด้านต่างๆ อย่างไร",
-                                "การจัดส่ง",
-                                "การบริการของพนักงานของบริษัท",
-                                "การติดต่อสื่อสารกับบริษัทฯ "
+                    string[] header = new string[4]
+                    {
+                            "จากผลิตภัณฑ์ที่ท่านรู้จักข้างต้นท่านมีความคิดเห็นในด้านต่างๆ อย่างไร",
+                            "การจัดส่ง",
+                            "การบริการของพนักงานของบริษัท",
+                            "การติดต่อสื่อสารกับบริษัทฯ "
+                        };
+
+                    string[] Eheader = new string[]
+                    {
+                            "Product",
+                            "Transport",
+                            "Service",
+                            "Com"
+                        };
+
+                    string[] textp2 = new string[7]
+                    {
+                            "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้",
+                            "รสชาติของสินค้าดีเป็นที่ต้องการของลูกค้า",
+                            "มีสินค้าที่สดใหม่เสมอ",
+                            "มีสินค้าส่งตามที่ท่านต้องการเสมอ",
+                            "สามารถสร้างผลกำไรที่น่าพอใจ",
+                            "มีสินค้าที่หลากหลายแปลกใหม่",
+                            "คุณภาพสินค้าสม่ำเสมอทุกครั้ง"
+                        };
+
+                    string[] textp3 = new string[4]
+                    {
+                            "การจัดส่งสินค้าตรงตามเวลาและสถานที่",
+                            "ความถูกต้องครบถ้วนของสินค้าที่จัดส่ง",
+                            "สภาพสินค้าและการป้องกันไม่ให้เสียหาย",
+                            "พนักงานจัดส่งมีกิริยามารยาทเรียบร้อย"
+                        };
+
+                    string[] textp4 = new string[4]
+                    {
+                            "พนักงานมีกิริยาสุภาพเรียบร้อย",
+                            "พนักงานให้ข้อมูลที่ท่านต้องการได้อย่างดี",
+                            "พนักงานสามารถแก้ไขปัญหาได้รวดเร็ว",
+                            "สามารถติดต่อพนักงานได้สะดวก"
+                        };
+
+                    string[] textp5 = new string[3]
+                    {
+                            "ท่านสามารถติดต่อกับบริษัทฯ ได้สะดวก",
+                            "ท่านได้รับคำตอบอย่างรวดเร็วเสมอ",
+                            "เมื่อติดต่อมายังบริษัทฯ ท่านได้รับการดูแลให้บริการอย่างดี"
+                        };
+
+                    List<string[]> list = new List<string[]>
+                    {
+                            textp2,
+                            textp3,
+                            textp4,
+                            textp5
+                        };
+
+                    string[] ModelScore1;
+
+                    string[] ModelScore2;
+
+                    string[] ModelScore3;
+
+                    string[] ModelScore4;
+
+                    List<string[]> ModelList = new List<string[]>();
+
+                    string[] ModelRemark = new string[4];
+
+                    if (Model.mwge2.ListSurvey1.Count() > 0)
+                    {
+                        ModelScore1 = new string[7]
+                        {
+                                Model.mwge2.ListSurvey1[0].RateProduct_1,
+                                Model.mwge2.ListSurvey1[0].RateProduct_2,
+                                Model.mwge2.ListSurvey1[0].RateProduct_3,
+                                Model.mwge2.ListSurvey1[0].RateProduct_4,
+                                Model.mwge2.ListSurvey1[0].RateProduct_5,
+                                Model.mwge2.ListSurvey1[0].RateProduct_6,
+                                Model.mwge2.ListSurvey1[0].RateProduct_7
                             };
 
-                            string[] Eheader = new string[]
-                            {
-                                "Product",
-                                "Transport",
-                                "Service",
-                                "Com"
+                        ModelScore2 = new string[4]
+                        {
+                                Model.mwge2.ListSurvey1[0].RateTransport_1,
+                                Model.mwge2.ListSurvey1[0].RateTransport_2,
+                                Model.mwge2.ListSurvey1[0].RateTransport_3,
+                                Model.mwge2.ListSurvey1[0].RateTransport_4
                             };
 
-                            string[] textp2 = new string[7]
-                            {
-                                "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้",
-                                "รสชาติของสินค้าดีเป็นที่ต้องการของลูกค้า",
-                                "มีสินค้าที่สดใหม่เสมอ",
-                                "มีสินค้าส่งตามที่ท่านต้องการเสมอ",
-                                "สามารถสร้างผลกำไรที่น่าพอใจ",
-                                "มีสินค้าที่หลากหลายแปลกใหม่",
-                                "คุณภาพสินค้าสม่ำเสมอทุกครั้ง"
+                        ModelScore3 = new string[4]
+                        {
+                                Model.mwge2.ListSurvey1[0].RateService_1,
+                                Model.mwge2.ListSurvey1[0].RateService_2,
+                                Model.mwge2.ListSurvey1[0].RateService_3,
+                                Model.mwge2.ListSurvey1[0].RateService_4
                             };
 
-                            string[] textp3 = new string[4]
-                            {
-                                "การจัดส่งสินค้าตรงตามเวลาและสถานที่",
-                                "ความถูกต้องครบถ้วนของสินค้าที่จัดส่ง",
-                                "สภาพสินค้าและการป้องกันไม่ให้เสียหาย",
-                                "พนักงานจัดส่งมีกิริยามารยาทเรียบร้อย"
+                        ModelScore4 = new string[3]
+                        {
+                                Model.mwge2.ListSurvey1[0].RateCom_1,
+                                Model.mwge2.ListSurvey1[0].RateCom_2,
+                                Model.mwge2.ListSurvey1[0].RateCom_3
                             };
 
-                            string[] textp4 = new string[4]
-                            {
-                                "พนักงานมีกิริยาสุภาพเรียบร้อย",
-                                "พนักงานให้ข้อมูลที่ท่านต้องการได้อย่างดี",
-                                "พนักงานสามารถแก้ไขปัญหาได้รวดเร็ว",
-                                "สามารถติดต่อพนักงานได้สะดวก"
+                        ModelList.Add(ModelScore1);
+                        ModelList.Add(ModelScore2);
+                        ModelList.Add(ModelScore3);
+                        ModelList.Add(ModelScore4);
+
+                        ModelRemark = new string[4]
+                        {
+                                Model.mwge2.ListSurvey1[0].RemarkProduct,
+                                Model.mwge2.ListSurvey1[0].RemarkTransport,
+                                Model.mwge2.ListSurvey1[0].RemarkService,
+                                Model.mwge2.ListSurvey1[0].RemarkCom
                             };
+                    }
 
-                            string[] textp5 = new string[3]
-                            {
-                                "ท่านสามารถติดต่อกับบริษัทฯ ได้สะดวก",
-                                "ท่านได้รับคำตอบอย่างรวดเร็วเสมอ",
-                                "เมื่อติดต่อมายังบริษัทฯ ท่านได้รับการดูแลให้บริการอย่างดี"
-                            };
-
-                            List<string[]> list = new List<string[]>
-                            {
-                                textp2,
-                                textp3,
-                                textp4,
-                                textp5
-                            };
-
-                            string[] ModelScore1;
-
-                            string[] ModelScore2;
-
-                            string[] ModelScore3;
-
-                            string[] ModelScore4;
-
-                            List<string[]> ModelList = new List<string[]>();
-
-                            string[] ModelRemark = new string[4];
-
-                            if (Model.mwge2.ListSurvey1.Count() > 0)
-                            {
-                                ModelScore1 = new string[7]
-                                {
-                                    Model.mwge2.ListSurvey1[0].RateProduct_1,
-                                    Model.mwge2.ListSurvey1[0].RateProduct_2,
-                                    Model.mwge2.ListSurvey1[0].RateProduct_3,
-                                    Model.mwge2.ListSurvey1[0].RateProduct_4,
-                                    Model.mwge2.ListSurvey1[0].RateProduct_5,
-                                    Model.mwge2.ListSurvey1[0].RateProduct_6,
-                                    Model.mwge2.ListSurvey1[0].RateProduct_7
-                                };
-
-                                ModelScore2 = new string[4]
-                                {
-                                    Model.mwge2.ListSurvey1[0].RateTransport_1,
-                                    Model.mwge2.ListSurvey1[0].RateTransport_2,
-                                    Model.mwge2.ListSurvey1[0].RateTransport_3,
-                                    Model.mwge2.ListSurvey1[0].RateTransport_4
-                                };
-
-                                ModelScore3 = new string[4]
-                                {
-                                    Model.mwge2.ListSurvey1[0].RateService_1,
-                                    Model.mwge2.ListSurvey1[0].RateService_2,
-                                    Model.mwge2.ListSurvey1[0].RateService_3,
-                                    Model.mwge2.ListSurvey1[0].RateService_4
-                                };
-
-                                ModelScore4 = new string[3]
-                                {
-                                    Model.mwge2.ListSurvey1[0].RateCom_1,
-                                    Model.mwge2.ListSurvey1[0].RateCom_2,
-                                    Model.mwge2.ListSurvey1[0].RateCom_3
-                                };
-
-                                ModelList.Add(ModelScore1);
-                                ModelList.Add(ModelScore2);
-                                ModelList.Add(ModelScore3);
-                                ModelList.Add(ModelScore4);
-
-                                ModelRemark = new string[4]
-                                {
-                                    Model.mwge2.ListSurvey1[0].RemarkProduct,
-                                    Model.mwge2.ListSurvey1[0].RemarkTransport,
-                                    Model.mwge2.ListSurvey1[0].RemarkService,
-                                    Model.mwge2.ListSurvey1[0].RemarkCom
-                                };
-                            }
-
-                            for (int i = 0; i < header.Count(); i++)
-                            {
-                                int part = i + 2;
-                                string remarkN = "mwge2.CS1.Remark" + Eheader[i];
+                    for (int i = 0; i < header.Count(); i++)
+                    {
+                        int part = i + 2;
+                        string remarkN = "mwge2.CS1.Remark" + Eheader[i];
 
                         <div class="box col-sm-12 col-md-12">
                             <div class="box-header with-border">
@@ -899,7 +923,7 @@ else
                     if (Model.mwge2.ListSurvey1.Count() == 0)
                     {
                         <div class="pull-right">
-                            <div class="col-sm-12 col-md-12">
+                            <div class="col-sm-12 col-md-12" id="noprint">
                                 <button type="submit" class="btn btn-info" onclick="return confirm('ยืนยันการบันทึก ?')" role="button">บันทึก</button>
                             </div>
                         </div>

@@ -567,7 +567,7 @@ namespace WinnerSurvey.Controllers
                     {
                         var oData4 = (from a in db.C_WGE_SURVEY_REPORT where a.ID_Report == Approve select a).FirstOrDefault();
 
-
+                        string email = "pasit.b@winnergroup.co.th";
                         string path2 = "";
                         switch (Session["Jobtitle"])
                         {
@@ -591,32 +591,50 @@ namespace WinnerSurvey.Controllers
                         oData4.pathApprove = path2;
 
                         db.SaveChanges();
-
+                        
+                        switch (oData4.User_Accept)
+                        {
+                            case "Narisa Samitaman":
+                                email = "narisa.s@winnergroup.co.th";
+                                break;
+                            case "Supaporn Bunnunyang":
+                                email = "supaporn.b@winnergroup.co.th";
+                                break;
+                            case "Pajaree Ruensuk":
+                                email = "pajaree.r@winnergroup.co.th";
+                                break;
+                            case "Panjaphat Budsaya-arunroj":
+                                email = "panjaphat.b@winnergroup.co.th";
+                                break;
+                            default:
+                                email = "salessupport@winnergroup.co.th";
+                                break;
+                        }
+                        getSendEmail(oData4.Year_Survey1, email , "approve", Approve);
+                        
                         return RedirectToAction("ApproveDetail1", "CR", new { ID_Report = Approve });
                     }
                     else if (Sendemail != null && (ID_Report == null && button == null && print == null && Approve == null))
                     {
                         var oData5 = (from a in db.C_WGE_SURVEY_REPORT where a.ID_Report == Sendemail select a).FirstOrDefault();
-                        string email = "pasit.b@winnergroup.co.th";
-                        /*switch (oData5.Dept)
+                        string email = "";
+                        switch (oData5.Dept)
                         {
                             case "c1":
-                                email = "yot.s@winngergroup.co.th";
+                                email = "yot.s@winnergroup.co.th";
                                 break;
                             case "c3":
-                                email = "chulawan.c@winngergroup.co.th";
+                                email = "chulawan.c@winnergroup.co.th";
                                 break;
                             case "c4":
-                                email = "nuttaporn.r@winngergroup.co.th";
+                                email = "nuttaporn.r@winnergroup.co.th";
                                 break;
                             default:
                                 email = null;
                                 break;
-                        }*/
-                        if (Session["Type"].ToString() == "Admin")
-                        {
-                            getSendEmail(oData5.Year_Survey1, email, Session["Name"].ToString(),Sendemail);
                         }
+                            getSendEmail(oData5.Year_Survey1, email, "summary",Sendemail);
+                        
 
                         return RedirectToAction("Approve1", "CR", new { Year = oData5.Year_Survey1 });
                     }
@@ -719,14 +737,53 @@ namespace WinnerSurvey.Controllers
                             int countsuccess = 0;
                             int countfail = 0;
                             var oData = (from a in db.C_WGE_SURVEY_REPORT where a.ID_Report == ID_Report select a).FirstOrDefault();
-                          
-                                    string email = emailHD;
-                                    var senderEmail = new MailAddress("info@winnergroup.co.th", "VBSA");
-                                    var receiverEmail = new MailAddress(email, "Receiver");
-                                    var password = "WGE51001*xx";
-                                    var subject = "Winnergroup Enterprise PLC.";
-                                    var newline = "<br />";
-                                    var newline2 = "<br /><br />";
+                        string name;
+                        switch (oData.Dept)
+                        {
+                            case "c1":
+                                name = "Head of Food Industry Sales";
+                                break;
+                            case "c3":
+                                name = "Head of Food Service Sales";
+                                break;
+                            case "c4":
+                                name = "Head of Modern Trade";
+                                break;
+                            default:
+                                name = "";
+                                break;
+                        }
+                        string email = emailHD;
+                        var senderEmail = new MailAddress("info@winnergroup.co.th", "Sales Support(Winner Survey)");
+                        var receiverEmail = new MailAddress(email, "Receiver");
+                        MailAddress copy = new MailAddress("pasit.b@winnergroup.co.th");
+                        var password = "WGE51001*xx";
+                        var subject = "รายงานสรุปแบบสอบถามความพึงพอใจกลุ่มลูกค้าผู้ผลิตหรือผู้จัดจำหน่ายปี " + oData.Year_Survey1;
+                        var newline = "<br />";
+                        var newline2 = "<br /><br />";
+                        var link = "http://110.170.165.101:10470";
+                        string body;
+                        switch (namesend)
+                        {
+                            case "summary":
+                                body = "เรียน " + name
+                                                + newline2 +
+                                                "   ระบบได้ทำการสรุปแบบสอบถามความพึงพอใจกลุ่มลูกค้าผู้ผลิตหรือผู้จัดจำหน่ายปี " + oData.Year_Survey1 + " เรียบร้อบแล้ว" +
+                                                newline + "โปรดตรวจสอบตาม Link ด้านล่าง :" + newline2 + link + newline2 +
+                                                "<font color='red'>" + "***ขั้นตอนการดำเนินการ " + "</front>" + newline +
+                                                "ล็อกอินเข้าสู่ระบบ -> ไปยังเมนู Report -> เลือกหัวข้อ 'สรุปแบบสอบถาม " + oData.Year_Survey1 + "'" +
+                                                newline2 + "<font color='black'>ผู้สรุป" + newline + oData.User_Accept + newline + oData.UserPosition;
+                                break;
+                            case "approve":
+                                body = "เรียน "+oData.User_Accept+newline2
+                                    +"คุณ "+oData.Head_Approve+"ตำแหน่ง : "+oData.ApprovePosition +" ได้ทำการอนุมัติ "+newline+"'สรุปรายงานแบบสอบถามความพึงพอใจกลุ่มลูกค้าผู้ผลิตหรือผู้จัดจำหน่ายปี "+oData.Year_Survey1+"' เรียบร้อยแล้ว"
+                                    +newline+"สามารถตรวจสอบได้ตาม link ด้านล่าง:"+newline+link;
+                                break;
+                            default:
+                                body = "";
+                                break;
+                        }
+                                    
 
                                     var smtp = new SmtpClient
                                     {
@@ -740,21 +797,19 @@ namespace WinnerSurvey.Controllers
                                     using (var mess = new MailMessage(senderEmail, receiverEmail)
                                     {
                                         Subject = subject,
-                                        Body = "เรียน  " 
-                                                + newline2 + 
-                                                "ทางบริษัท WGE ได้ดำเนินการธุรกิจตามนโยบาย ISO9001 เพื่อให้เป็นไปตามนโยบาย  ทางบริษัทจึงขอส่งแบบสำรวจความพึงพอใจเพื่อวัดระดับความพึงพอใจของผู้ใช้สินค้าของบริษัททุกท่าน ตลอดจนรับทราบความคิดเห็น / ข้อเสนอแนะต่างๆ ที่มีต่อสินค้าและบริการของบริษัท เพื่อนำไปพัฒนาและยกระดับมาตรฐานในการให้บริการต่อไป" +
-                                                newline2 + "คลิกที่นี่ เพื่อตอบแบบสำรวจ : "  + newline2 + "รบกวนดำเนินการตอบกลับภายในวันที่ 27 ธ.ค. 2564" + newline2 + "ขอบคุณในความร่วมมือ" + newline2 + "Sales Support /  Company LOGO"
+                                        Body = body
                                     })
                                     {
                                         mess.IsBodyHtml = true;
+                                        mess.CC.Add(copy);
                                         smtp.Send(mess);
                                         log.WriteLog("Send : "  + " Success!!");
                                     }
-                                    
-                               
+
 
                             string message = string.Format("Send Email => total : {0} ,success : {1} , fail : {2}", total, countsuccess, countfail);
                             TempData["msg"] = "<script>alert('" + message + "');</script>";
+                            log.WriteLog(string.Format("{0}({1}) : {2} {3} Email-{4}", Session["Name"].ToString(), Session["Code"].ToString(), "Send", System.Reflection.MethodBase.GetCurrentMethod().Name,email));
                             return RedirectToAction("Index", "Home");
                         
                     }

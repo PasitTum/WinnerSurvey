@@ -427,11 +427,12 @@
                                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
                                         <button class="btn btn-danger btn-block chsm col-lg-12 col-md-12 col-sm-12 col-xs-12 " value="@Model.sURVEY_REPORT.ID_Report" name="button" id="button" onclick="return confirm('ยืนยันการส่ง ?')">ยกเลิกรายการสรุป</button>
                                     </div>
-                                    <!--
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
-                                        <button class="btn btn-info btn-block chsm col-lg-12 col-md-12 col-sm-12 col-xs-12 " value="@Model.sURVEY_REPORT.ID_Report" name="Sendemail" id="Sendemail" onclick="return confirm('ยืนยันการส่ง ?')">Send Email</button>
-                                    </div>
-                                    -->
+                                    if (Session["Type"].ToString() == "Admin")
+                                    {
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bm" style="padding: 10px">
+                                            <button class="btn btn-info btn-block chsm col-lg-12 col-md-12 col-sm-12 col-xs-12 " value="@Model.sURVEY_REPORT.ID_Report" name="Sendemail" id="Sendemail" onclick="return confirm('ยืนยันการส่ง ?')">Send Email</button>
+                                        </div>
+                                    }
                                 }
                                 else if (Session["JobTitle"].ToString() == "IT Programmer" || Session["JobTitle"].ToString() == "Sales Support Supervisor" || Session["JobTitle"].ToString() == "IT Manager (Corporate Service)")
                                 {

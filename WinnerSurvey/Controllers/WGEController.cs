@@ -867,22 +867,20 @@ namespace WinnerSurvey.Controllers
                                 if (mData2 != null)
                                 {
                                     string email = mData2.Email;
-                                    var senderEmail = new MailAddress("vbsa@winnergroup.co.th", "VBSA");
+                                    var senderEmail = new MailAddress("info@winnergroup.co.th", "Sales Support(Winner Survey)");
                                     var receiverEmail = new MailAddress(email, "Receiver");
-                                    var password = "WGE51001*xx";
                                     var subject = "Winnergroup Enterprise PLC.";
                                     var newline = "<br />";
                                     var newline2 = "<br /><br />";
 
-                                    var smtp = new SmtpClient
-                                    {
-                                        Host = "mail.winnergroup.co.th",
-                                        Port = 587,
-                                        EnableSsl = true,
-                                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                                        UseDefaultCredentials = false,
-                                        Credentials = new NetworkCredential(senderEmail.Address, password)
-                                    };
+                                    SmtpClient smtp = new SmtpClient();
+                                    smtp.UseDefaultCredentials = false;
+                                    smtp.Credentials = new System.Net.NetworkCredential("info@winnergroup.co.th", "A123456a");
+                                    smtp.Port = 587; // You can use Port 25 if 587 is blocked (mine is!)
+                                    smtp.Host = "smtp.office365.com";
+                                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                    smtp.EnableSsl = true;
+
                                     using (var mess = new MailMessage(senderEmail, receiverEmail)
                                     {
                                         Subject = subject,

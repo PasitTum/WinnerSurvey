@@ -621,7 +621,7 @@ namespace WinnerSurvey.Controllers
                         switch (oData5.Dept)
                         {
                             case "c1":
-                                email = "yot.s@winnergroup.co.th";
+                                email = "yotsaelim@winnergroup.co.th";
                                 break;
                             case "c3":
                                 email = "chulawan.c@winnergroup.co.th";
@@ -757,7 +757,6 @@ namespace WinnerSurvey.Controllers
                         var senderEmail = new MailAddress("info@winnergroup.co.th", "Sales Support(Winner Survey)");
                         var receiverEmail = new MailAddress(email, "Receiver");
                         MailAddress copy = new MailAddress("pasit.b@winnergroup.co.th");
-                        var password = "WGE51001*xx";
                         var subject = "รายงานสรุปแบบสอบถามความพึงพอใจกลุ่มลูกค้าผู้ผลิตหรือผู้จัดจำหน่ายปี " + oData.Year_Survey1;
                         var newline = "<br />";
                         var newline2 = "<br /><br />";
@@ -783,17 +782,14 @@ namespace WinnerSurvey.Controllers
                                 body = "";
                                 break;
                         }
-                                    
 
-                                    var smtp = new SmtpClient
-                                    {
-                                        Host = "mail.winnergroup.co.th",
-                                        Port = 587,
-                                        EnableSsl = true,
-                                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                                        UseDefaultCredentials = false,
-                                        Credentials = new NetworkCredential(senderEmail.Address, password)
-                                    };
+                                    SmtpClient smtp = new SmtpClient();
+                                    smtp.UseDefaultCredentials = false;
+                                    smtp.Credentials = new System.Net.NetworkCredential("info@winnergroup.co.th", "A123456a");
+                                    smtp.Port = 587; // You can use Port 25 if 587 is blocked (mine is!)
+                                    smtp.Host = "smtp.office365.com";
+                                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                    smtp.EnableSsl = true;
                                     using (var mess = new MailMessage(senderEmail, receiverEmail)
                                     {
                                         Subject = subject,
@@ -801,7 +797,7 @@ namespace WinnerSurvey.Controllers
                                     })
                                     {
                                         mess.IsBodyHtml = true;
-                                        mess.CC.Add(copy);
+                                        //mess.CC.Add(copy);
                                         smtp.Send(mess);
                                         log.WriteLog("Send : "  + " Success!!");
                                     }

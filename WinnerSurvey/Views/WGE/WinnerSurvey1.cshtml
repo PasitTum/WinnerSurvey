@@ -72,6 +72,21 @@
         #box-onprint {
             padding: 20px;
         }
+        #box-title{
+            text-align:right;
+        }
+        #br-print{
+            padding-bottom:30px;
+        }
+        #br-print2{
+            padding-bottom:6px;
+        }
+        #print-padding{
+            padding-top:30px;
+        }
+        #print-padding2 {
+            padding-top: 100px;
+        }
     }
 </style>
 @if (Model.mwge1.OCRD == null && Model.mwge2.ListSurvey1 == null)
@@ -91,7 +106,7 @@
                 <div>
                     <div class="col-sm-12 col-md-12" style="text-align:center">
                         <a><img style="width:50%;position:relative;" src="~/Files/close.jpg" /></a>
-                        <h1 style="color:red;">ระบบปิดรับข้อมูลแบบสอบถามของปี 2021 แล้ว</h1>
+                        <h1 style="color:red;">ระบบปิดรับข้อมูลแบบสอบถามของปี 2021 แล้ว @Model.Year</h1>
                         <h4>**** โปรดแจ้งผู้ติดต่อเพื่อทำแบบสอบถามในปีปัจุบัน ****</h4>
                     </div>
                 </div>
@@ -115,8 +130,8 @@
                 {
 
                     <div class="box col-sm-12 col-md-12">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">FM-SL-018</h3>
+                        <div class="box-header with-border" id="box-title">
+                            <h3 class="box-title" id="box-title">FM-SL-018</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" id="noprint" data-widget="collapse">
@@ -227,7 +242,7 @@
                             </div>
                             <div class="row">
                                 <br />
-                                <div class="form-group col-sm-12 col-md-6">
+                                <div class="form-group col-sm-12 col-md-6" id="print-padding">
                                     <label class="col-sm-12 col-md-3" style="text-align:center">E-mail</label>
                                     <div class="col-sm-12 col-md-9">
                                         <input type="text" name="mwge2.CS1.Email" class="form-control" maxlength="50" id="inputname" value="" autocomplete="off" placeholder="E-mail">
@@ -280,31 +295,31 @@
                         <div class="box-footer">
                             <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
                                 <br />
-                                <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <table id="odgvData" class="table table-bordered table-hover dataTable" style="width:100%"  role="grid" aria-describedby="example2_info">
                                     <thead>
                                         <tr role="row">
-                                            <th colspan="2" class="text-center">ผลิตภัณฑ์ที่ท่านซื้อจากบริษัท</th>
+                                            <th class="text-center" colspan="2">ผลิตภัณฑ์ที่ท่านซื้อจากบริษัท</th>
                                         </tr>
                                         <tr>
-                                            <th style="text-align:center">สินค้า</th>
-                                            <th style="text-align:center">เลือก</th>
+                                            <th style="text-align:center;" >สินค้า</th>
+                                            <th style="text-align:center;">เลือก</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        
                                         @for (int i = 0; i < product1.Count(); i++)
                                         {
                                             <tr>
-                                                <td style="width:50%;text-align:center">@product1[i] - @product2[i]</td>
-                                                <td style="text-align:center;width:50%"><input type="checkbox" name="checkbox" value="@product1[i] - @product2[i]" style="transform:scale(2.0)" /></td>
+                                                <td style="width:70%;text-align:center" >@product1[i] - @product2[i]</td>
+                                                <td style="text-align:center;width:30%" ><input type="checkbox" name="checkbox" value="@product1[i] - @product2[i]" style="transform:scale(2.0)" /></td>
                                             </tr>
                                         }
 
                                         <tr>
-                                            <td style="width:50%"><input type="text" name="textOther" id="textOther" class="form-control" onkeyup="check();" placeholder="อื่นๆ โปรดระบุ" /></td>
-                                            <td style="text-align:center;width:50%"><input type="checkbox" name="checkbox" id="othercheck" value="other" style="transform:scale(2.0)" /></td>
+                                            <td style="width:70%" ><input type="text" name="textOther" id="textOther" class="form-control" onkeyup="check();" placeholder="อื่นๆ โปรดระบุ" /></td>
+                                            <td style="text-align:center;width:30%"><input type="checkbox" name="checkbox" id="othercheck" value="other" style="transform:scale(2.0)" /></td>
                                         </tr>
-
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -336,53 +351,68 @@
                         int part = i + 2;
                         string remarkN = "mwge2.CS1.Remark" + Eheader[i];
 
-                        <div class="box col-sm-12 col-md-12">
-                            <div class="box-header with-border">
-                                <h3 class="box-title">ส่วนที่ @part - @header[i]</h3>
+                    <div class="box col-sm-12 col-md-12">
+                        <div class="box-header with-border" id="print-padding">
+                            <h3 class="box-title">ส่วนที่ @part - @header[i]</h3>
 
-                                <div class="box-tools pull-right">
-                                    <button type="button" id="noprint" class="btn btn-box-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
+                            <div class="box-tools pull-right">
+                                <button type="button" id="noprint" class="btn btn-box-tool" data-widget="collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
                             </div>
+                        </div>
 
-                            <div class="box-body">
-                                <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
-                                    <br />
-                                    <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                                        <thead>
-                                            <tr role="row">
-                                                <th></th>
-                                                <th class="text-center">5 <br />พอใจอย่างยิ่ง</th>
-                                                <th class="text-center">4 <br />พอใจ</th>
-                                                <th class="text-center">3 <br />เฉยๆ</th>
-                                                <th class="text-center">2 <br />ไม่ค่อยน่าพอใจ</th>
-                                                <th class="text-center">1 <br />ไม่พอใจอย่างยิ่ง</th>
+                        <div class="box-body">
+                            <div class="form-group col-sm-12 col-md-12 table-responsive no-padding">
+                                <br />
+                                <table id="odgvData" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th></th>
+                                            <th class="text-center" style="font-size:16px;">5 <br />พอใจอย่างยิ่ง</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print">4 <br />พอใจ</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print">3 <br />เฉยๆ</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print2">2 <br />ไม่ค่อยน่าพอใจ</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print2">1 <br />ไม่พอใจอย่างยิ่ง</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @for (int j = 0; j < list[i].Count(); j++)
+                                        {
+                                            int integer = j + 1;
+                                            string radio = "mwge2.CS1.Rate" + Eheader[i] + "_" + integer;
+
+                                            <tr>
+                                                <td align="center">@list[i][j]</td>
+                                                <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="5" required></td>
+                                                <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="4"></td>
+                                                <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="3"></td>
+                                                <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="2"></td>
+                                                <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="1"></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                        }
 
-                                            @for (int j = 0; j < list[i].Count(); j++)
-                                            {
-                                                int integer = j + 1;
-                                                string radio = "mwge2.CS1.Rate" + Eheader[i] + "_" + integer;
-
-                                                <tr>
-                                                    <td align="center">@list[i][j]</td>
-                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="5" required></td>
-                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="4"></td>
-                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="3"></td>
-                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="2"></td>
-                                                    <td style="width:12%" align="center"><input style="transform:scale(1.5)" type="radio" name="@radio" class="radio" id="inputname" value="1"></td>
-                                                </tr>
-                                            }
-
-                                        </tbody>
-                                    </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @if ( part ==3 || part ==5)
+                        {
+                            <div class="col-sm-12 col-md-12" id="print-padding2">
+                                <div class="row">
+                                    <br />
+                                    <div class="form-group col-sm-12 col-md-12">
+                                        <label class="col-sm-12 col-md-2" style="text-align:center">รายละเอียดเพิ่มเติม</label>
+                                        <div class="col-sm-12 col-md-10">
+                                            <textarea class="form-control" name="@remarkN" maxlength="1000" rows="5"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
+                        }
+                        else
+                        {
                             <div class="col-sm-12 col-md-12">
                                 <div class="row">
                                     <br />
@@ -394,13 +424,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+                    </div>
 
                     }
                     <div class="box-footer">
                         <div class="col-sm-12 col-md-12" id="padding-print">
                             <br />
-                            <b style="text-align:left" class="pull-left">Rev.01,/APR 01,22</b>
+                            <b style="text-align:left" class="pull-left">REV.01/APR 01,22</b>
                             <b style="text-align:right" class="pull-right">อายุการเก็บเอกสาร 1 ปี</b>
                         </div>
                     </div>
@@ -665,8 +696,8 @@ else
                                             foreach (var item in Model.mwge2.ListSurvey1)
                                             {
                                                 <tr>
-                                                    <td style="width:50%;text-align:center">@item.Detail</td>
-                                                    <td style="text-align:center;width:50%"><input type="checkbox" disabled checked style="transform:scale(2.0)" /></td>
+                                                    <td style="width:70%;text-align:center">@item.Detail</td>
+                                                    <td style="text-align:center;width:30%"><input type="checkbox" disabled checked style="transform:scale(2.0)" /></td>
                                                 </tr>
                                             }
                                         }
@@ -675,14 +706,14 @@ else
                                             for (int i = 0; i < product1.Count(); i++)
                                             {
                                                 <tr>
-                                                    <td style="width:50%;text-align:center">@product1[i] - @product2[i]</td>
-                                                    <td style="text-align:center;width:50%"><input type="checkbox" name="checkbox" value="@product1[i] - @product2[i]" style="transform:scale(2.0)" /></td>
+                                                    <td style="width:70%;text-align:center">@product1[i] - @product2[i]</td>
+                                                    <td style="text-align:center;width:30%"><input type="checkbox" name="checkbox" value="@product1[i] - @product2[i]" style="transform:scale(2.0)" /></td>
                                                 </tr>
                                             }
 
                                             <tr>
-                                                <td style="width:50%"><input type="text" name="textOther" class="form-control" placeholder="อื่นๆ โปรดระบุ" /></td>
-                                                <td style="text-align:center;width:50%"><input type="checkbox" name="checkbox" value="other" style="transform:scale(2.0)" /></td>
+                                                <td style="width:70%"><input type="text" name="textOther" class="form-control" placeholder="อื่นๆ โปรดระบุ" /></td>
+                                                <td style="text-align:center;width:30%"><input type="checkbox" name="checkbox" value="other" style="transform:scale(2.0)" /></td>
                                             </tr>
                                         }
                                     </tbody>
@@ -835,11 +866,11 @@ else
                                         <thead>
                                             <tr role="row">
                                                 <th></th>
-                                                <th class="text-center">5 <br />พอใจอย่างยิ่ง</th>
-                                                <th class="text-center">4 <br />พอใจ</th>
-                                                <th class="text-center">3 <br />เฉยๆ</th>
-                                                <th class="text-center">2 <br />ไม่ค่อยน่าพอใจ</th>
-                                                <th class="text-center">1 <br />ไม่พอใจอย่างยิ่ง</th>
+                                                <th class="text-center" style="font-size:16px;">5 <br />พอใจอย่างยิ่ง</th>
+                                                <th class="text-center" style="font-size:16px;" id="br-print">4 <br />พอใจ</th>
+                                                <th class="text-center" style="font-size:16px;" id="br-print">3 <br />เฉยๆ</th>
+                                                <th class="text-center" style="font-size:16px;" id="br-print2">2 <br />ไม่ค่อยน่าพอใจ</th>
+                                                <th class="text-center" style="font-size:16px;" id="br-print2">1 <br />ไม่พอใจอย่างยิ่ง</th>
                                             </tr>
                                         </thead>
                                         <tbody>

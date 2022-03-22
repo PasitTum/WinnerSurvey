@@ -23,7 +23,7 @@
     };
     function check() {
         let x = document.getElementById("textOther").value;
-        if (x == null || x=="") {
+        if (x == null || x == "") {
             document.getElementById("othercheck").checked = false;
         }
         else {
@@ -32,16 +32,16 @@
     };
     function validChk() {
         confirm('ยืนยันการบันทึก ?');
-		var chkBox = document.getElementsByName('checkbox');
-		var lenChkBox = chkBox.length;
-		//alert(lenChkBox)
-		var valid=0;
-		for(var i=0;i<lenChkBox;i++) {
-			if(chkBox[i].checked==true) {
-				valid=1;
-				break;
-			}
-		}
+        var chkBox = document.getElementsByName('checkbox');
+        var lenChkBox = chkBox.length;
+        //alert(lenChkBox)
+        var valid = 0;
+        for (var i = 0; i < lenChkBox; i++) {
+            if (chkBox[i].checked == true) {
+                valid = 1;
+                break;
+            }
+        }
         if (valid == 0) {
             chkBox[0].required = true;
         }
@@ -50,10 +50,56 @@
                 chkBox[i].required = false;
             }
         }
-		return true;
+        return true;
     };
 </script>
 
+<style>
+    @@media print {
+        #noprint {
+            display: none;
+        }
+
+        #padding-print {
+            padding: 0px;
+        }
+
+        html, body {
+            width: 210mm;
+            height: 297mm;
+        }
+
+        #box-onprint {
+            padding: 20px;
+        }
+
+        #box-title {
+            text-align: right;
+        }
+
+        #br-print {
+            padding-bottom: 30px;
+        }
+
+        #br-print2 {
+            padding-bottom: 6px;
+        }
+
+        #print-padding {
+            padding-top: 30px;
+        }
+
+        #print-padding2 {
+            padding-top: 100px;
+        }
+        #box-print2{
+            padding-top:250px;
+        }
+        #box-footer-padding{
+            padding-bottom:0px;
+        }
+    }
+</style>
 @if (Model.mwge2.ListSurvey2 == null)
 {
     <div class="row">
@@ -84,11 +130,11 @@
                 {
 
                     <div class="box col-sm-12 col-md-12">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">FM-SL-019</h3>
+                        <div class="box-header with-border" id="box-title">
+                            <h3 class="box-title" id="box-title">FM-SL-019</h3>
 
                             <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <button type="button" class="btn btn-box-tool" id="noprint" data-widget="collapse">
                                     <i class="fa fa-minus"></i>
                                 </button>
                             </div>
@@ -121,7 +167,7 @@
                             </div>
                         </div>
 
-                        <div class="box-footer">
+                        <div class="box-footer" id="box-footer-padding">
 
                             <div class="row" style="display:none">
                                 <input name="Year" value="@Model.Year" />
@@ -195,11 +241,11 @@
                         </div>
                     </div>
 
-                    <div class="box col-sm-12 col-md-12">
+                    <div class="box col-sm-12 col-md-12" id="box-print2">
                         <div class="box-header with-border">
                             <h3 class="box-title">ส่วนที่ 1 - ท่านรู้จักสินค้าใดต่อไปนี้บ้าง</h3>
 
-                            <div class="box-tools pull-right">
+                            <div class="box-tools pull-right" id="noprint">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                     <i class="fa fa-minus"></i>
                                 </button>
@@ -208,7 +254,7 @@
 
                         @{
                             string[] product1 = new string[] { "แยมทาขนมปังนำเข้า", "ข้าวโพดในไมโครเวฟ", "สาหร่ายทะเลปรุงรส", "สาหร่ายทะเลปรุงรส", "เส้นพาสต้าและมักกะโรนี", "น้ำผลไม้นำเข้า", "น้ำแครนเบอร์รี่", "ซอสปรุงรส", "บะหมี่กึ่งสำเร็จรูป" };
-                            string[] product2 = new string[] { "สตรีมไลน์", "ป็อปซีเคร็ท", "คิมโนริ","ซีเฟรนด์", "คัมพาน่า", "ฮาวีเฟรช", "แลงเจอร์", "พีอาร์พี", "Baixiang" };
+                            string[] product2 = new string[] { "สตรีมไลน์", "ป็อปซีเคร็ท", "คิมโนริ", "ซีเฟรนด์", "คัมพาน่า", "ฮาวีเฟรช", "แลงเจอร์", "พีอาร์พี", "Baixiang" };
                         }
 
                         <div class="box-body">
@@ -247,7 +293,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">ส่วนที่ 2 - จากผลิตภัณฑ์ที่ท่านรู้จักข้างต้นท่านมีความคิดเห็นในด้านต่างๆ อย่างไร</h3>
 
-                            <div class="box-tools pull-right">
+                            <div class="box-tools pull-right" id="noprint">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                     <i class="fa fa-minus"></i>
                                 </button>
@@ -261,29 +307,29 @@
                                     <thead>
                                         <tr role="row">
                                             <th></th>
-                                            <th class="text-center">5 <br />พอใจอย่างยิ่ง</th>
-                                            <th class="text-center">4 <br />พอใจ</th>
-                                            <th class="text-center">3 <br />เฉยๆ</th>
-                                            <th class="text-center">2 <br />ไม่ค่อยน่าพอใจ</th>
-                                            <th class="text-center">1 <br />ไม่พอใจอย่างยิ่ง</th>
+                                            <th class="text-center" style="font-size:16px;">5 <br />พอใจอย่างยิ่ง</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print">4 <br />พอใจ</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print">3 <br />เฉยๆ</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print2">2 <br />ไม่ค่อยน่าพอใจ</th>
+                                            <th class="text-center" style="font-size:16px;" id="br-print2">1 <br />ไม่พอใจอย่างยิ่ง</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         @{
 
-                                            string[] textp2 = new string[] 
+                                            string[] textp2 = new string[]
                                             {
-                                                "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้",
-                                                "รสชาติของสินค้าอร่อยถูกใจ",
-                                                "คุณภาพสินค้าสม่ำเสมอทุกครั้งที่ซื้อ",
-                                                "หีบห่อบรรจุภัณฑ์อยู่ในสภาพสมบูรณ์",
-                                                "มีสินค้าที่สดใหม่เสมอให้ท่านเลือกซื้อ",
-                                                "สามารถหาซื้อสินค้าที่ท่านต้องการได้",
-                                                "สามารถหาข้อมูลเกี่ยวกับสินค้าได้สะดวก",
-                                                "สินค้าคุ้มค่า / คุ้มราคา",
-                                                "มีรายการส่งเสริมการขายที่ดี /น่าสนใจ",
-                                                "มีของแจกแถมที่น่าสนใจ"
+                                                                    "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้",
+                                                                    "รสชาติของสินค้าอร่อยถูกใจ",
+                                                                    "คุณภาพสินค้าสม่ำเสมอทุกครั้งที่ซื้อ",
+                                                                    "หีบห่อบรรจุภัณฑ์อยู่ในสภาพสมบูรณ์",
+                                                                    "มีสินค้าที่สดใหม่เสมอให้ท่านเลือกซื้อ",
+                                                                    "สามารถหาซื้อสินค้าที่ท่านต้องการได้",
+                                                                    "สามารถหาข้อมูลเกี่ยวกับสินค้าได้สะดวก",
+                                                                    "สินค้าคุ้มค่า / คุ้มราคา",
+                                                                    "มีรายการส่งเสริมการขายที่ดี /น่าสนใจ",
+                                                                    "มีของแจกแถมที่น่าสนใจ"
                                             };
 
                                             for (int i = 0; i < textp2.Count(); i++)
@@ -323,12 +369,12 @@
                     </div>
 
                     <div class="col-sm-12 col-md-12">
-                        <div class="col-sm-12 col-md-12 ">
+                        <div class="col-sm-12 col-md-12 " id="noprint">
                             <button type="submit" class="btn btn-info pull-right" onclick="validChk();" role="button">บันทึก</button>
                         </div>
                         <div class="col-sm-12 col-md-12" style="padding:20px">
                             <br />
-                            <b style="text-align:left" class="pull-left">Rev.01,/APR 01,22</b>
+                            <b style="text-align:left" class="pull-left">REV.01/APR 01,22</b>
                             <b style="text-align:right" class="pull-right">อายุการเก็บเอกสาร 1 ปี</b>
                         </div>
                     </div>
@@ -351,12 +397,12 @@ else
             </div>
             <br />
 
-            <div class="box col-sm-12 col-md-12">
+            <div class="box col-sm-12 col-md-12" id="box-title">
                 <div class="box-header with-border">
-                    <h3 class="box-title">FM-SL-019</h3>
+                    <h3 class="box-title" id="box-title">FM-SL-019</h3>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <div class="box-tools pull-right" >
+                        <button type="button" class="btn btn-box-tool" id="noprint" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
@@ -365,7 +411,7 @@ else
                 <div class="box-body">
                     <div class="row">
 
-                        <div class="text-center">
+                        <div class="text-center" >
                             <br />
                             <label>แบบสำรวจความพึงพอใจของผู้บริโภคโดยตรงต่อผลิตภัณฑ์ของบริษัท วินเนอร์กรุ๊ป เอ็นเตอร์ไพรซ์จำกัด (มหาชน)</label>
                         </div>
@@ -449,11 +495,11 @@ else
                 </div>
             </div>
 
-            <div class="box col-sm-12 col-md-12">
+            <div class="box col-sm-12 col-md-12" id="box-print2">
                 <div class="box-header with-border">
                     <h3 class="box-title">ส่วนที่ 1 - ท่านรู้จักสินค้าใดต่อไปนี้บ้าง</h3>
 
-                    <div class="box-tools pull-right">
+                    <div class="box-tools pull-right" id="noprint">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
@@ -498,7 +544,7 @@ else
                     <h3 class="box-title">ส่วนที่ 2 - จากผลิตภัณฑ์ที่ท่านรู้จักข้างต้นท่านมีความคิดเห็นในด้านต่างๆ อย่างไร</h3>
 
                     <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <button type="button" class="btn btn-box-tool" id="noprint" data-widget="collapse">
                             <i class="fa fa-minus"></i>
                         </button>
                     </div>
@@ -523,10 +569,10 @@ else
                                 @{
 
                                     string[] textp2 = new string[] { "เป็นสินค้าที่มีคุณภาพดีเชื่อถือได้", "รสชาติของสินค้าอร่อยถูกใจ", "คุณภาพสินค้าสม่ำเสมอทุกครั้งที่ซื้อ", "หีบห่อบรรจุภัณฑ์อยู่ในสภาพสมบูรณ์", "มีสินค้าที่สดใหม่เสมอให้ท่านเลือกซื้อ",
-                                                                                         "สามารถหาซื้อสินค้าที่ท่านต้องการได้","สามารถหาข้อมูลเกี่ยวกับสินค้าได้สะดวก","สินค้าคุ้มค่า / คุ้มราคา","มีรายการส่งเสริมการขายที่ดี /น่าสนใจ","มีของแจกแถมที่น่าสนใจ"};
+                                                                                                                                 "สามารถหาซื้อสินค้าที่ท่านต้องการได้","สามารถหาข้อมูลเกี่ยวกับสินค้าได้สะดวก","สินค้าคุ้มค่า / คุ้มราคา","มีรายการส่งเสริมการขายที่ดี /น่าสนใจ","มีของแจกแถมที่น่าสนใจ"};
                                     string[] rate = new string[] { Model.mwge2.ListSurvey2[0].Rate_1, Model.mwge2.ListSurvey2[0].Rate_2, Model.mwge2.ListSurvey2[0].Rate_3, Model.mwge2.ListSurvey2[0].Rate_4,
-                                                                       Model.mwge2.ListSurvey2[0].Rate_5,Model.mwge2.ListSurvey2[0].Rate_6,Model.mwge2.ListSurvey2[0].Rate_7,Model.mwge2.ListSurvey2[0].Rate_8,
-                                                                       Model.mwge2.ListSurvey2[0].Rate_9,Model.mwge2.ListSurvey2[0].Rate_10};
+                                                                                                               Model.mwge2.ListSurvey2[0].Rate_5,Model.mwge2.ListSurvey2[0].Rate_6,Model.mwge2.ListSurvey2[0].Rate_7,Model.mwge2.ListSurvey2[0].Rate_8,
+                                                                                                               Model.mwge2.ListSurvey2[0].Rate_9,Model.mwge2.ListSurvey2[0].Rate_10};
 
                                     for (int i = 0; i < textp2.Count(); i++)
                                     {
@@ -558,6 +604,13 @@ else
                                 <textarea class="form-control" rows="5" maxlength="1000" readonly>@Model.mwge2.ListSurvey2[0].Remark</textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                    <div class="col-sm-12 col-md-12" style="padding:20px">
+                        <br />
+                        <b style="text-align:left" class="pull-left">REV.01/APR 01,22</b>
+                        <b style="text-align:right" class="pull-right">อายุการเก็บเอกสาร 1 ปี</b>
                     </div>
                 </div>
             </div>
